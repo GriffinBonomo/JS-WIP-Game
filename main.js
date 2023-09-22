@@ -1,10 +1,10 @@
+import {
+	canvas,
+	context,
+	CANVAS_HEIGHT,
+	CANVAS_WIDTH,
+} from "./globals.js";
 import Player from "./player.js";
-
-
-const canvas = document.createElement('canvas');
-const context = canvas.getContext('2d') || new CanvasRenderingContext2D();
-const CANVAS_WIDTH = 1280;
-const CANVAS_HEIGHT = 720;
 
 // Set the dimensions of the play area.
 canvas.width = CANVAS_WIDTH;
@@ -39,8 +39,6 @@ function gameLoop(currentTime = 0) {
 
 
 function update(dt) {
-	render();
-
 	if(keys.a){
 		player.moveHorizontal(false);
 	}
@@ -53,8 +51,6 @@ function update(dt) {
 	if(keys.s){
 		player.moveVertical(true);
 	}
-
-	player.update(dt);
 
 	// Teleport to other side of map
 	if(player.x + player.width < 0){
@@ -70,6 +66,9 @@ function update(dt) {
 	else if(player.y + player.height < 0){
 		player.y = CANVAS_HEIGHT;
 	}
+
+	render();
+	player.update(dt);
 }
 
 
@@ -81,18 +80,10 @@ function render() {
 	 */
 	context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-	context.fillStyle = "green";
-	context.fillRect(player.x, player.y, player.width, player.height);
-
 	// Set font configuration.
 	context.font = '40px Arial';
 	context.fillStyle = 'white';
 	context.textAlign = 'center';
-
-	context.fillStyle = "black";
-	context.fillText(`DX: ${player.dx}`, 100, 80);
-	context.fillText(`DY: ${player.dy}`, 100, 150)
-
 }
 
 // Start the game loop.
