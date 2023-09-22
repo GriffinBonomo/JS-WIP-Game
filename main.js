@@ -5,6 +5,7 @@ import {
 	CANVAS_WIDTH,
 } from "./globals.js";
 import Player from "./player.js";
+import Projectile from "./projectile.js";
 
 // Set the dimensions of the play area.
 canvas.width = CANVAS_WIDTH;
@@ -50,21 +51,6 @@ function update(dt) {
 	}
 	if(keys.s){
 		player.moveVertical(true);
-	}
-
-	// Teleport to other side of map
-	if(player.x + player.width < 0){
-		player.x = CANVAS_WIDTH;
-	}
-	else if(player.x > CANVAS_WIDTH){
-		player.x = 0;
-	}
-	
-	if(player.y > CANVAS_HEIGHT){
-		player.y = 0;
-	}
-	else if(player.y + player.height < 0){
-		player.y = CANVAS_HEIGHT;
 	}
 
 	render();
