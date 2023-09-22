@@ -52,6 +52,11 @@ function update(dt) {
 	if(keys.s){
 		player.moveVertical(true);
 	}
+	/*
+	if(keys[' ']){
+		keys[' '] = false;
+	}
+	*/
 
 	render();
 	player.update(dt);
