@@ -7,14 +7,17 @@ import {
 
 export default class Projectile {
     constructor(x, y, dx, dy, height = 10, width = 10){
+
         this.x = x;
         this.y = y;
-        // Dx and Dy allow the launcher to empart velocity onto the projectile
+
         this.dx = dx;
         this.dy = dy;
 
-        this.height;
-        this.width;
+        this.height = height;
+        this.width = width;
+
+        this.cullable = false;
 
         this.colour = "red";
     }
@@ -33,12 +36,18 @@ export default class Projectile {
         else if(this.y + this.height < 0){
             this.y = CANVAS_HEIGHT;
         }
+
+        // Culling when off screen
+        if((this.x + this.width < 0) || (this.x > CANVAS_WIDTH) || (this.y > CANVAS_HEIGHT) || (this.y + this.height < 0)){
+            this.cullable = true;
+        }
     }
 
     update(dt){
         this.x += this.dx * dt;
         this.y += this.dy * dt;
 
+        this.collision();
         this.render();
     }
 

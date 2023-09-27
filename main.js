@@ -41,22 +41,23 @@ function gameLoop(currentTime = 0) {
 
 function update(dt) {
 	if(keys.a){
-		player.moveHorizontal(false);
+		player.moveBackward();
 	}
 	if(keys.d){
-		player.moveHorizontal(true);
+		player.moveForward();
 	}
 	if(keys.w){
-		player.moveVertical(false);
+		player.moveUpward();
 	}
 	if(keys.s){
-		player.moveVertical(true);
+		player.moveDownward();
 	}
-	/*
+	
 	if(keys[' ']){
 		keys[' '] = false;
+		player.shootProjectile();
 	}
-	*/
+	
 
 	render();
 	player.update(dt);

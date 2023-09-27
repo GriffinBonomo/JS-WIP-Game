@@ -4,40 +4,55 @@ import {
     CANVAS_HEIGHT,
     CANVAS_WIDTH
 } from "./globals.js"
+import Projectile from "./projectile.js";
 
 export default class Player {
     constructor(x, y, height, width){
+        // Position
         this.x = x;
         this.y = y;
 
+        // Velocity
         this.dx = 0;
         this.dy = 0;
 
+        // Acceleration 
+        this.ddx = 0;
+        this.ddy = 0;
+
+        // Dimensions
         this.height = height;
         this.width = width;
 
-        this.moveSpeed = 100;
+        // Limits
+        this.groundAcceleration = 100;
         this.maxSpeed = 500;
 
+        // Abilities
+        this.projectiles = [];
+
+        // Dev
         this.debug = 1;
     }
-    
-    moveHorizontal(moveForward){
-        if(moveForward){
-            this.dx = Math.min(this.maxSpeed, this.dx+this.moveSpeed);
-        }
-        else{
-            this.dx = Math.max(-this.maxSpeed, this.dx-this.moveSpeed);
-        }
+
+    moveForward(){
+        this.dx = Math.min(this.maxSpeed, this.dx+this.groundAcceleration);
     }
-    moveVertical(moveDownward){
-        if(moveDownward){
-            this.dy = Math.min(this.maxSpeed, this.dy+this.moveSpeed);
-        }
-        else{
-            this.dy = Math.max(-this.maxSpeed, this.dy-this.moveSpeed);
-        }
+    moveBackward(){
+        this.dx = Math.max(-this.maxSpeed, this.dx-this.groundAcceleration);
     }
+
+    moveUpward(){
+        this.dy = Math.max(-this.maxSpeed, this.dy-this.groundAcceleration);
+    }
+    moveDownward(){
+        this.dy = Math.min(this.maxSpeed, this.dy+this.groundAcceleration);
+    }
+
+    shootProjectile(){
+        this.projectiles.push(new Projectile(this.x, this.y, this.dx, this.dy));
+    }
+
 
     collision(){
         // Teleport to other side of map
@@ -57,7 +72,7 @@ export default class Player {
     }
 
     applyFriction(){
-        let frictionCoefficient = 0.7;
+        let frictionCoefficient = 0.85;
 
         this.dx = Math.trunc(this.dx * frictionCoefficient);
         this.dy = Math.trunc(this.dy * frictionCoefficient);
@@ -69,6 +84,10 @@ export default class Player {
 
         this.applyFriction();
         this.collision();
+
+        this.projectiles.forEach(projectile => {
+            projectile.update(dt);
+        });
 
         this.render();
     }
