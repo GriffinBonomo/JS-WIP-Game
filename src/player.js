@@ -3,7 +3,7 @@ import {
     context,
     CANVAS_HEIGHT,
     CANVAS_WIDTH
-} from "./globals.js"
+} from "../globals.js"
 import Projectile from "./projectile.js";
 
 export default class Player {

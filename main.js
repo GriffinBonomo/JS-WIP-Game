@@ -3,9 +3,10 @@ import {
 	context,
 	CANVAS_HEIGHT,
 	CANVAS_WIDTH,
+	images,
 } from "./globals.js";
-import Player from "./player.js";
-import Projectile from "./projectile.js";
+import Level from "./src/level.js";
+import Player from "./src/player.js";
 
 // Set the dimensions of the play area.
 canvas.width = CANVAS_WIDTH;
@@ -25,7 +26,16 @@ canvas.addEventListener('keyup', event => {
 	keys[event.key] = false;
 });
 
+
+// Fetching all assets
+const {
+	images: imageDefinitions,
+} = await fetch('./config.json').then((response) => response.json());
+images.load(imageDefinitions);
+
+
 let player = new Player(30, 30, 20, 20);
+let level = new Level();
 
 // This will be used to calculate delta time in `gameLoop()`.
 let lastTime = 0;
@@ -60,6 +70,7 @@ function update(dt) {
 	
 
 	render();
+	level.render();
 	player.update(dt);
 }
 
