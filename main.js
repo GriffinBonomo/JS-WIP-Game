@@ -5,6 +5,7 @@ import {
 	CANVAS_WIDTH,
 	images,
 } from "./globals.js";
+import HUD from "./src/hud.js";
 import Level from "./src/level.js";
 import Player from "./src/player.js";
 
@@ -34,8 +35,11 @@ const {
 images.load(imageDefinitions);
 
 
-let player = new Player(30, 30, 20, 20);
+let player = new Player(200, 200, 32, 32);
 let level = new Level();
+let hud = new HUD(player, 1);
+
+
 
 // This will be used to calculate delta time in `gameLoop()`.
 let lastTime = 0;
@@ -67,11 +71,12 @@ function update(dt) {
 		keys[' '] = false;
 		player.shootProjectile();
 	}
-	
 
 	render();
 	level.render();
 	player.update(dt);
+
+	hud.update(dt);
 }
 
 
@@ -84,7 +89,7 @@ function render() {
 	context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
 	// Set font configuration.
-	context.font = '40px Arial';
+	context.font = '24px Arial';
 	context.fillStyle = 'white';
 	context.textAlign = 'center';
 }

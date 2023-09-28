@@ -30,9 +30,6 @@ export default class Player {
 
         // Abilities
         this.projectiles = [];
-
-        // Dev
-        this.debug = 1;
     }
 
     moveForward(){
@@ -95,11 +92,5 @@ export default class Player {
     render(){
         context.fillStyle = "green";
         context.fillRect(this.x, this.y, this.width, this.height);
-
-        if(this.debug == 1){
-            context.fillStyle = "black";
-            context.fillText(`DX: ${this.dx}`, 100, 80);
-            context.fillText(`DY: ${this.dy}`, 100, 150);
-        }
     }
 }
