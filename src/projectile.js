@@ -6,7 +6,7 @@ import {
 } from "../globals.js";
 
 export default class Projectile {
-    constructor(x, y, dx, dy, height = 10, width = 10){
+    constructor(x, y, dx, dy, height = 16, width = 16){
 
         this.x = x;
         this.y = y;
