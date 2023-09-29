@@ -1,16 +1,22 @@
 {
     "images": [
         {
-            "name": "gradientBackground",
-            "path": "./assets/images/gradientBackground.jpg",
-            "width": 1280,
-            "height": 720
-        },
-        {
             "name": "gradientBackgroundLight",
             "path": "./assets/images/gradientBackgroundLight.jpg",
             "width": 1280,
             "height": 720
+        },
+        {
+            "name": "testBackground",
+            "path": "./assets/images/testBackground.png",
+            "width": 640,
+            "height": 360
+        },
+        {
+            "name": "character",
+            "path": "./assets/images/character.png",
+            "width": 64,
+            "height": 32
         }
     ]
 }

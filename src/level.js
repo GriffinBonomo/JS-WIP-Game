@@ -10,6 +10,7 @@ export default class Level {
 
     update(dt){
         // Todo: probably do something here at some point
+        this.render();
     }
 
     render() {

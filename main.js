@@ -73,9 +73,8 @@ function update(dt) {
 	}
 
 	render();
-	level.render();
+	level.update(dt);
 	player.update(dt);
-
 	hud.update(dt);
 }
 
