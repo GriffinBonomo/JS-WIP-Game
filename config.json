@@ -7,6 +7,12 @@
             "height": 720
         },
         {
+            "name": "gradientBackgroundColourful",
+            "path": "./assets/images/gradientBackgroundColourful.jpg",
+            "width": 1280,
+            "height": 720
+        },
+        {
             "name": "testBackground",
             "path": "./assets/images/testBackground.png",
             "width": 640,
@@ -14,9 +20,9 @@
         },
         {
             "name": "character",
-            "path": "./assets/images/character.png",
-            "width": 64,
-            "height": 32
+            "path": "./assets/images/characterIdle.png",
+            "width": 256,
+            "height": 256
         }
     ]
 }

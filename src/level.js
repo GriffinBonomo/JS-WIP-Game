@@ -14,6 +14,6 @@ export default class Level {
     }
 
     render() {
-        images.render("gradientBackgroundLight", 0, 0);
+        images.render("gradientBackgroundColourful", 0, 0);
     }
 }

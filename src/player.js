@@ -36,8 +36,8 @@ export default class Player {
 
         // Sprites
         // Change this to static later maybe
-        this.currentAnimation = new Animation([0,1], 0.2);
-        this.TOTAL_SPRITES = 2;
+        this.currentAnimation = new Animation([0,1,2,3], 0.5);
+        this.TOTAL_SPRITES = 4;
         this.sprites = this.generateSprites();
     }
 
@@ -115,6 +115,7 @@ export default class Player {
     }
 
     render(){
+        /*
         if(this.dx > 0){
             this.sprites[this.currentAnimation.getCurrentFrame()].render(Math.floor(this.x), Math.floor(this.y));
         }
@@ -126,8 +127,10 @@ export default class Player {
 			context.restore();
         } 
         else{
-            this.sprites[0].render(Math.floor(this.x), Math.floor(this.y))
+            this.sprites[0].
         }
+        */
+        this.sprites[this.currentAnimation.getCurrentFrame()].render(Math.floor(this.x), Math.floor(this.y));
 
     }
 }
