@@ -116,7 +116,7 @@ export default class Player {
 
     render(){
         if(this.dx > 0){
-            this.sprites[this.currentAnimation.getCurrentFrame()].render(this.x, this.y);
+            this.sprites[this.currentAnimation.getCurrentFrame()].render(Math.floor(this.x), Math.floor(this.y));
         }
         else if(this.dx < 0){
             context.save();
@@ -126,7 +126,7 @@ export default class Player {
 			context.restore();
         } 
         else{
-            this.sprites[0].render(this.x, this.y)
+            this.sprites[0].render(Math.floor(this.x), Math.floor(this.y))
         }
 
     }
