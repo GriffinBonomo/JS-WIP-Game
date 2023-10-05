@@ -14,15 +14,15 @@ export default class HUD {
 
     update(dt){
         this.fps = Math.round(1/dt);
-        this.render();
     }
 
     render(){
         if(this.enableDebug == 1){
-            context.fillStyle = "black";
-            context.fillText(`DX: ${this.player.dx}`, 75, 50);
-            context.fillText(`DY: ${this.player.dy}`, 75, 100);
-            context.fillText(`FPS: ${this.fps}`, 75, 150);
+            context.fillStyle = "white";
+            context.font = "16px Joystix"
+            context.fillText(`DX: ${this.player.dx}`, 10, 20);
+            context.fillText(`DY: ${this.player.dy}`, 10, 40);
+            context.fillText(`FPS: ${this.fps}`, 10, 60);
         }
     }
 }

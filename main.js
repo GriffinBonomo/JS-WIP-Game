@@ -1,10 +1,16 @@
+import GameStateName from "./src/enums/GameStateNames.js";
+import Game from "./lib/Game.js";
 import {
 	canvas,
 	context,
+	fonts,
+	images,
+	keys,
 	CANVAS_HEIGHT,
 	CANVAS_WIDTH,
-	images,
+	stateMachine,
 } from "./globals.js";
+import PlayState from "./src/states/PlayState.js";
 import HUD from "./src/hud.js";
 import Level from "./src/level.js";
 import Player from "./src/player.js";
@@ -17,8 +23,17 @@ canvas.setAttribute('tabindex', '1');
 // Now that the canvas element has been prepared, we can add it to the DOM.
 document.body.appendChild(canvas);
 
-let keys = {};
+// Fetching all assets
+const {
+	images: imageDefinitions,
+	fonts: fontDefinitions,
+} = await fetch('./config.json').then((response) => response.json());
 
+// Load Assets
+images.load(imageDefinitions);
+fonts.load(fontDefinitions);
+
+// Listening for user input
 canvas.addEventListener('keydown', event => {
 	keys[event.key] = true;
 });
@@ -27,20 +42,27 @@ canvas.addEventListener('keyup', event => {
 	keys[event.key] = false;
 });
 
+stateMachine.add(GameStateName.Play, new PlayState());
 
-// Fetching all assets
-const {
-	images: imageDefinitions,
-} = await fetch('./config.json').then((response) => response.json());
-images.load(imageDefinitions);
-
+const game = new Game(stateMachine, context, canvas.width, canvas.height);
 
 let player = new Player(200, 200, 32, 32);
 let level = new Level();
 let hud = new HUD(player, 1);
 
+stateMachine.change(GameStateName.Play, {
+	player: player,
+	level: level,
+	hud: hud,
+});
 
+//console.log(stateMachine)
+console.log(game);
+game.start();
 
+canvas.focus();
+
+/*
 // This will be used to calculate delta time in `gameLoop()`.
 let lastTime = 0;
 
@@ -73,18 +95,14 @@ function update(dt) {
 	}
 
 	render();
-	level.update(dt);
-	player.update(dt);
-	hud.update(dt);
+	//level.update(dt);
+	//player.update(dt);
+	//hud.update(dt);
 }
 
 
 function render() {
-	/**
-	 * Erase whatever was previously on the canvas so that we can start
-	 * fresh each frame. It does this by drawing a "clear" rectangle starting
-	 * from the origin to the extremities of the canvas.
-	 */
+
 	context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
 	// Set font configuration.
@@ -96,3 +114,4 @@ function render() {
 // Start the game loop.
 gameLoop();
 canvas.focus();
+*/

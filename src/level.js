@@ -1,6 +1,6 @@
 //import Graphic from "../lib/Graphic";
 //import Sprite from "../lib/Sprite";
-import { images } from "../globals.js";
+import { images, context } from "../globals.js";
 
 export default class Level {
     constructor() {
@@ -10,7 +10,6 @@ export default class Level {
 
     update(dt){
         // Todo: probably do something here at some point
-        this.render();
     }
 
     render() {

@@ -2,6 +2,7 @@ import {
     canvas,
     context,
     images,
+    keys,
     CANVAS_HEIGHT,
     CANVAS_WIDTH
 } from "../globals.js"
@@ -100,6 +101,24 @@ export default class Player {
     }
 
     update(dt){
+        if(keys.a){
+            this.moveBackward();
+        }
+        if(keys.d){
+            this.moveForward();
+        }
+        if(keys.w){
+            this.moveUpward();
+        }
+        if(keys.s){
+            this.moveDownward();
+        }
+        
+        if(keys[' ']){
+            keys[' '] = false;
+            this.shootProjectile();
+        }
+
         this.x += this.dx * dt;
         this.y += this.dy * dt;
 
@@ -111,7 +130,6 @@ export default class Player {
         });
 
         this.currentAnimation.update(dt);
-        this.render();
     }
 
     render(){

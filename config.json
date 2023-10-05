@@ -24,5 +24,11 @@
             "width": 256,
             "height": 256
         }
+    ],
+    "fonts": [
+        {
+            "name": "Joystix",
+            "path": "./assets/fonts/Joystix.ttf"
+        }
     ]
 }
