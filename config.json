@@ -13,12 +13,6 @@
             "height": 720
         },
         {
-            "name": "testBackground",
-            "path": "./assets/images/testBackground.png",
-            "width": 640,
-            "height": 360
-        },
-        {
             "name": "character",
             "path": "./assets/images/characterIdle.png",
             "width": 256,
