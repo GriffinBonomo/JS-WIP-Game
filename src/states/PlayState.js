@@ -41,9 +41,6 @@ export default class PlayState extends State {
         */
         this.level.render();
         this.player.render();
-        this.player.projectiles.forEach(projectile => {
-            projectile.render();
-        });
         this.hud.render();
     }
 }

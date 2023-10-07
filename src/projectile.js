@@ -48,7 +48,6 @@ export default class Projectile {
         this.y += this.dy * dt;
 
         this.collision();
-        this.render();
     }
 
     render(){

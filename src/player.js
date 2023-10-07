@@ -148,6 +148,10 @@ export default class Player {
             this.sprites[0].
         }
         */
+        this.projectiles.forEach(projectile => {
+            projectile.render();
+        });
+
         this.sprites[this.currentAnimation.getCurrentFrame()].render(Math.floor(this.x), Math.floor(this.y));
 
     }
