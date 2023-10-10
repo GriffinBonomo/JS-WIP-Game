@@ -37,7 +37,7 @@ export default class Player {
 
         // Sprites
         // Change this to static later maybe
-        this.currentAnimation = new Animation([0,1,2,1], 0.5);
+        this.currentAnimation = new Animation([0,1,2,1], 0.3);
         this.TOTAL_SPRITES = 4;
         this.sprites = this.generateSprites();
     }
