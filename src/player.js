@@ -9,6 +9,7 @@ import {
 import Projectile from "./projectile.js";
 import Animation from "../lib/Animation.js";
 import Sprite from "../lib/Sprite.js";
+import Direction from "./enums/Directions.js";
 
 export default class Player {
     constructor(x, y, height, width){
@@ -71,8 +72,22 @@ export default class Player {
         this.dy = Math.min(this.maxSpeed, this.dy+this.groundAcceleration);
     }
 
-    shootProjectile(){
-        this.projectiles.push(new Projectile(this.x, this.y, this.dx, this.dy));
+    shootProjectile(shootDirection){
+        let speed = 300; // Change this later
+
+        switch(shootDirection){
+            case Direction.Left:
+                this.projectiles.push(new Projectile(this.x, this.y, -speed, 0));
+                break;
+            case Direction.Right:
+                this.projectiles.push(new Projectile(this.x, this.y, speed, 0));
+                break;
+            case Direction.Up:
+                this.projectiles.push(new Projectile(this.x, this.y, 0, -speed));
+                break;
+            case Direction.Down:
+                this.projectiles.push(new Projectile(this.x, this.y, 0, speed));
+        }
     }
 
 
@@ -101,6 +116,7 @@ export default class Player {
     }
 
     update(dt){
+        // MOVING
         if(keys.a){
             this.moveBackward();
         }
@@ -114,9 +130,22 @@ export default class Player {
             this.moveDownward();
         }
         
-        if(keys[' ']){
-            keys[' '] = false;
-            this.shootProjectile();
+        // SHOOTING
+        if(keys.ArrowUp){
+            keys.ArrowUp = false;
+            this.shootProjectile(Direction.Up);
+        }
+        if(keys.ArrowDown){
+            keys.ArrowDown = false;
+            this.shootProjectile(Direction.Down);
+        }
+        if(keys.ArrowLeft){
+            keys.ArrowLeft = false;
+            this.shootProjectile(Direction.Left);
+        }
+        if(keys.ArrowRight){
+            keys.ArrowRight = false;
+            this.shootProjectile(Direction.Right);
         }
 
         this.x += this.dx * dt;
