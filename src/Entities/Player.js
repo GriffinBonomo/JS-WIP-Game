@@ -5,11 +5,11 @@ import {
     keys,
     CANVAS_HEIGHT,
     CANVAS_WIDTH
-} from "../globals.js"
-import Projectile from "./projectile.js";
-import Animation from "../lib/Animation.js";
-import Sprite from "../lib/Sprite.js";
-import Direction from "./enums/Directions.js";
+} from "../../globals.js"
+import Projectile from "./Projectile.js";
+import Animation from "../../lib/Animation.js";
+import Sprite from "../../lib/Sprite.js";
+import Direction from "../enums/Directions.js";
 
 export default class Player {
     constructor(x, y, height, width){

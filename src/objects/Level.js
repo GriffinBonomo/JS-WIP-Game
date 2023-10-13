@@ -1,6 +1,6 @@
 //import Graphic from "../lib/Graphic";
 //import Sprite from "../lib/Sprite";
-import { images, context } from "../globals.js";
+import { images, context } from "../../globals.js";
 
 export default class Level {
     constructor() {

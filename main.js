@@ -12,8 +12,8 @@ import {
 } from "./globals.js";
 import PlayState from "./src/states/PlayState.js";
 import HUD from "./src/hud.js";
-import Level from "./src/level.js";
-import Player from "./src/player.js";
+import Level from "./src/objects/Level.js";
+import Player from "./src/Entities/Player.js";
 
 // Set the dimensions of the play area.
 canvas.width = CANVAS_WIDTH;
@@ -56,8 +56,6 @@ stateMachine.change(GameStateName.Play, {
 	hud: hud,
 });
 
-//console.log(stateMachine)
-console.log(game);
 game.start();
 
 canvas.focus();
