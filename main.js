@@ -13,7 +13,8 @@ import {
 import PlayState from "./src/states/PlayState.js";
 import HUD from "./src/hud.js";
 import Level from "./src/objects/Level.js";
-import Player from "./src/Entities/Player.js";
+import Player from "./src/entities/Player.js";
+import Tile from "./src/objects/Tile.js";
 
 // Set the dimensions of the play area.
 canvas.width = CANVAS_WIDTH;
@@ -46,8 +47,8 @@ stateMachine.add(GameStateName.Play, new PlayState());
 
 const game = new Game(stateMachine, context, canvas.width, canvas.height);
 
-let player = new Player(200, 200, 32, 32);
-let level = new Level();
+let player = new Player(200, 200, Tile.SIZE * 2, Tile.SIZE * 2);
+let level = new Level(30, 50);
 let hud = new HUD(player, 1);
 
 stateMachine.change(GameStateName.Play, {

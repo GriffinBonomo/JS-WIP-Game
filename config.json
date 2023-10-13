@@ -1,12 +1,6 @@
 {
     "images": [
         {
-            "name": "gradientBackgroundLight",
-            "path": "./assets/images/gradientBackgroundLight.jpg",
-            "width": 1280,
-            "height": 720
-        },
-        {
             "name": "gradientBackgroundColourful",
             "path": "./assets/images/gradientBackgroundColourful.jpg",
             "width": 1280,
@@ -17,6 +11,12 @@
             "path": "./assets/images/characterIdle.png",
             "width": 256,
             "height": 256
+        },
+        {
+            "name": "tiles",
+            "path": "./assets/images/tileSprites.png",
+            "width": 128,
+            "height": 128
         }
     ],
     "fonts": [
