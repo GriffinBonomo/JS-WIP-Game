@@ -13,7 +13,7 @@ export default class Tile {
         this.y = y;
         this.isCollidable = isCollidable;
 
-        this.TOTAL_SPRITES = 3;
+        this.TOTAL_SPRITES = 1;
 
         this.sprite = this.generateRandomTileSprite();
     }
@@ -21,11 +21,15 @@ export default class Tile {
     generateRandomTileSprite(){
         const sprites = [];
 
+        // Ugly P.O.S testing feature to allow me to change between ground and grass
+        let spriteOffset = this.isCollidable? 16: 0;
+        console.log(spriteOffset);
+
         for(let i = 0; i < this.TOTAL_SPRITES; i++){
             sprites.push(new Sprite(
 				images.get("tiles"),
                 i * Tile.SIZE,
-				0,
+				spriteOffset,
 				Tile.SIZE,
 				Tile.SIZE,
 			));

@@ -27,13 +27,25 @@ export default class Level {
     generateTiles(){
         const tileMap = new Array();
 
-        for(let y = 0; y < this.height; y++){
+        this.generateBackgroundTiles(tileMap);
+        this.generateGroundTiles(tileMap);
+
+        return tileMap;
+    }
+
+    generateBackgroundTiles(tileMap){
+        for(let y = 0; y < this.height - 1; y++){
             tileMap.push([]);
 
             for(let x = 0; x < this.width; x++){
                 tileMap[y].push(new Tile(x * Tile.SIZE, y * Tile.SIZE, false));
             }   
         }
-        return tileMap;
+    }
+
+    generateGroundTiles(tileMap){
+        for(let x = 0; x < this.width; x++){
+            tileMap[this.height-2].push(new Tile(x * Tile.SIZE, (this.height-1) * Tile.SIZE, true));
+        }   
     }
 }
