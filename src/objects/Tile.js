@@ -23,7 +23,6 @@ export default class Tile {
 
         // Ugly P.O.S testing feature to allow me to change between ground and grass
         let spriteOffset = this.isCollidable? 16: 0;
-        console.log(spriteOffset);
 
         for(let i = 0; i < this.TOTAL_SPRITES; i++){
             sprites.push(new Sprite(
