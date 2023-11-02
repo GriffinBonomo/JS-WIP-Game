@@ -70,16 +70,17 @@ export default class Player {
 
         switch(shootDirection){
             case Direction.Left:
-                this.projectiles.push(new Projectile(this.position.x, this.position.x, -speed, 0));
+                this.projectiles.push(new Projectile(new Vector(this.position.x, this.position.y), new Vector(-speed, 0)));
                 break;
             case Direction.Right:
-                this.projectiles.push(new Projectile(this.position.x, this.position.x, speed, 0));
+                this.projectiles.push(new Projectile(new Vector(this.position.x, this.position.y), new Vector(speed, 0)));
                 break;
             case Direction.Up:
-                this.projectiles.push(new Projectile(this.position.x, this.position.y, 0, -speed));
+                this.projectiles.push(new Projectile(new Vector(this.position.x, this.position.y), new Vector(0, -speed)));
                 break;
             case Direction.Down:
-                this.projectiles.push(new Projectile(this.position.x, this.position.y, 0, speed));
+                this.projectiles.push(new Projectile(new Vector(this.position.x, this.position.y), new Vector(0, speed)));
+                break;
         }
     }
 

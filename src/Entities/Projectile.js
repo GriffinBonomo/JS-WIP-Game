@@ -4,18 +4,16 @@ import {
     CANVAS_HEIGHT,
     CANVAS_WIDTH,
 } from "../../globals.js";
+import Vector from "../../lib/Vector.js";
 
 export default class Projectile {
-    constructor(x, y, dx, dy, height = 16, width = 16){
+    static DEFAULT_DIMENSIONS = new Vector(16, 16);
 
-        this.x = x;
-        this.y = y;
+    constructor(position, velocity, dimensions = Projectile.DEFAULT_DIMENSIONS){
+        this.position = position;
+        this.velocity = velocity;
 
-        this.dx = dx;
-        this.dy = dy;
-
-        this.height = height;
-        this.width = width;
+        this.dimensions = dimensions
 
         this.cullable = false;
 
@@ -23,35 +21,36 @@ export default class Projectile {
     }
 
     collision(){
-        if(this.x + this.width < 0){
-            this.x = CANVAS_WIDTH;
+        if(this.position.x + this.dimensions.x < 0){
+            this.position.x = CANVAS_WIDTH;
         }
-        else if(this.x > CANVAS_WIDTH){
-            this.x = 0;
+        else if(this.position.x > CANVAS_WIDTH){
+            this.position.x = 0;
         }
         
-        if(this.y > CANVAS_HEIGHT){
-            this.y = 0;
+        if(this.position.y > CANVAS_HEIGHT){
+            this.position.y = 0;
         }
-        else if(this.y + this.height < 0){
-            this.y = CANVAS_HEIGHT;
+        else if(this.position.y + this.dimensions.y < 0){
+            this.position.y = CANVAS_HEIGHT;
         }
 
         // Culling when off screen
-        if((this.x + this.width < 0) || (this.x > CANVAS_WIDTH) || (this.y > CANVAS_HEIGHT) || (this.y + this.height < 0)){
+        if((this.position.x + this.dimensions.x < 0) || 
+            (this.position.x > CANVAS_WIDTH) || 
+            (this.position.y > CANVAS_HEIGHT) || 
+            (this.position.y + this.dimensions.y < 0)){
             this.cullable = true;
         }
     }
 
     update(dt){
-        this.x += this.dx * dt;
-        this.y += this.dy * dt;
-
+        this.position.add(this.velocity, dt);
         this.collision();
     }
 
     render(){
         context.fillStyle = this.colour;
-        context.fillRect(this.x, this.y, this.width, this.height);
+        context.fillRect(this.position.x, this.position.y, this.dimensions.x, this.dimensions.y);
     }
 }
