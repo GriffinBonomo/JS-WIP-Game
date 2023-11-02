@@ -20,8 +20,8 @@ export default class HUD {
         if(this.enableDebug == 1){
             context.fillStyle = "white";
             context.font = "16px Joystix"
-            context.fillText(`DX: ${this.player.dx}`, 10, 20);
-            context.fillText(`DY: ${this.player.dy}`, 10, 40);
+            context.fillText(`DX: ${this.player.velocity.x}`, 10, 20);
+            context.fillText(`DY: ${this.player.velocity.y}`, 10, 40);
             context.fillText(`FPS: ${this.fps}`, 10, 60);
         }
     }

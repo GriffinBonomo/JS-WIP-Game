@@ -6,28 +6,22 @@ import {
     CANVAS_HEIGHT,
     CANVAS_WIDTH
 } from "../../globals.js"
+import Vector from "../../lib/Vector.js";
 import Projectile from "./Projectile.js";
 import Animation from "../../lib/Animation.js";
 import Sprite from "../../lib/Sprite.js";
 import Direction from "../enums/Directions.js";
 
 export default class Player {
-    constructor(x, y, height, width){
-        // Position
-        this.x = x;
-        this.y = y;
+    constructor(position, dimensions){
+        this.position = position;
+        this.dimensions = dimensions;
 
-        // Velocity
-        this.dx = 0;
-        this.dy = 0;
+        this.velocity = new Vector(0,0);
 
         // Acceleration 
         this.ddx = 0;
         this.ddy = 0;
-
-        // Dimensions
-        this.height = height;
-        this.width = width;
 
         // Limits
         this.groundAcceleration = 100;
@@ -49,27 +43,26 @@ export default class Player {
         for(let i = 0; i < this.TOTAL_SPRITES; i++){
             sprites.push(new Sprite(
 				images.get("character"),
-				i * this.width,
+				i * this.dimensions.x,
 				0,
-				this.width,
-				this.height,
+				this.dimensions.x,
+				this.dimensions.y,
 			));
         }
         return sprites;
     }
 
     moveForward(){
-        this.dx = Math.min(this.maxSpeed, this.dx+this.groundAcceleration);
+        this.velocity.x = Math.min(this.maxSpeed, this.velocity.x+this.groundAcceleration);
     }
     moveBackward(){
-        this.dx = Math.max(-this.maxSpeed, this.dx-this.groundAcceleration);
+        this.velocity.x = Math.max(-this.maxSpeed, this.velocity.x-this.groundAcceleration);
     }
-
     moveUpward(){
-        this.dy = Math.max(-this.maxSpeed, this.dy-this.groundAcceleration);
+        this.velocity.y = Math.max(-this.maxSpeed, this.velocity.y-this.groundAcceleration);
     }
     moveDownward(){
-        this.dy = Math.min(this.maxSpeed, this.dy+this.groundAcceleration);
+        this.velocity.y = Math.min(this.maxSpeed, this.velocity.y+this.groundAcceleration);
     }
 
     shootProjectile(shootDirection){
@@ -77,42 +70,42 @@ export default class Player {
 
         switch(shootDirection){
             case Direction.Left:
-                this.projectiles.push(new Projectile(this.x, this.y, -speed, 0));
+                this.projectiles.push(new Projectile(this.position.x, this.position.x, -speed, 0));
                 break;
             case Direction.Right:
-                this.projectiles.push(new Projectile(this.x, this.y, speed, 0));
+                this.projectiles.push(new Projectile(this.position.x, this.position.x, speed, 0));
                 break;
             case Direction.Up:
-                this.projectiles.push(new Projectile(this.x, this.y, 0, -speed));
+                this.projectiles.push(new Projectile(this.position.x, this.position.y, 0, -speed));
                 break;
             case Direction.Down:
-                this.projectiles.push(new Projectile(this.x, this.y, 0, speed));
+                this.projectiles.push(new Projectile(this.position.x, this.position.y, 0, speed));
         }
     }
 
 
     collision(){
         // Teleport to other side of map
-        if(this.x + this.width < 0){
-            this.x = CANVAS_WIDTH;
+        if(this.position.x + this.dimensions.x < 0){
+            this.position.x = CANVAS_WIDTH;
         }
-        else if(this.x > CANVAS_WIDTH){
-            this.x = 0;
+        else if(this.position.x > CANVAS_WIDTH){
+            this.position.x = 0;
         }
         
-        if(this.y > CANVAS_HEIGHT){
-            this.y = 0;
+        if(this.position.y > CANVAS_HEIGHT){
+            this.position.y = 0;
         }
-        else if(this.y + this.height < 0){
-            this.y = CANVAS_HEIGHT;
+        else if(this.position.y + this.dimensions.y < 0){
+            this.position.y = CANVAS_HEIGHT;
         }
     }
 
     applyFriction(){
         let frictionCoefficient = 0.85;
 
-        this.dx = Math.trunc(this.dx * frictionCoefficient);
-        this.dy = Math.trunc(this.dy * frictionCoefficient);
+        this.velocity.x = Math.trunc(this.velocity.x * frictionCoefficient);
+        this.velocity.y = Math.trunc(this.velocity.y * frictionCoefficient);
     }
 
     update(dt){
@@ -147,9 +140,7 @@ export default class Player {
             keys.ArrowRight = false;
             this.shootProjectile(Direction.Right);
         }
-
-        this.x += this.dx * dt;
-        this.y += this.dy * dt;
+        this.position.add(this.velocity, dt);
 
         this.applyFriction();
         this.collision();
@@ -181,7 +172,7 @@ export default class Player {
             projectile.render();
         });
 
-        this.sprites[this.currentAnimation.getCurrentFrame()].render(Math.floor(this.x), Math.floor(this.y));
+        this.sprites[this.currentAnimation.getCurrentFrame()].render(Math.floor(this.position.x), Math.floor(this.position.y));
 
     }
 }

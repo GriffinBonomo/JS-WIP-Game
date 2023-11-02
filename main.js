@@ -13,8 +13,9 @@ import {
 import PlayState from "./src/states/PlayState.js";
 import HUD from "./src/hud.js";
 import Level from "./src/objects/Level.js";
-import Player from "./src/entities/Player.js";
+import Player from "./src/Entities/Player.js";
 import Tile from "./src/objects/Tile.js";
+import Vector from "./lib/Vector.js";
 
 // Set the dimensions of the play area.
 canvas.width = CANVAS_WIDTH;
@@ -47,7 +48,7 @@ stateMachine.add(GameStateName.Play, new PlayState());
 
 const game = new Game(stateMachine, context, canvas.width, canvas.height);
 
-let player = new Player(200, 200, Tile.SIZE * 2, Tile.SIZE * 2);
+let player = new Player(new Vector(200,200), new Vector(Tile.SIZE * 2, Tile.SIZE * 2));
 let level = new Level(30, 50);
 let hud = new HUD(player, 1);
 
@@ -60,57 +61,3 @@ stateMachine.change(GameStateName.Play, {
 game.start();
 
 canvas.focus();
-
-/*
-// This will be used to calculate delta time in `gameLoop()`.
-let lastTime = 0;
-
-function gameLoop(currentTime = 0) {
-	const deltaTime = (currentTime - lastTime) / 1000;
-
-	update(deltaTime);
-	lastTime = currentTime;
-	requestAnimationFrame(gameLoop);
-}
-
-
-function update(dt) {
-	if(keys.a){
-		player.moveBackward();
-	}
-	if(keys.d){
-		player.moveForward();
-	}
-	if(keys.w){
-		player.moveUpward();
-	}
-	if(keys.s){
-		player.moveDownward();
-	}
-	
-	if(keys[' ']){
-		keys[' '] = false;
-		player.shootProjectile();
-	}
-
-	render();
-	//level.update(dt);
-	//player.update(dt);
-	//hud.update(dt);
-}
-
-
-function render() {
-
-	context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-	// Set font configuration.
-	context.font = '24px Arial';
-	context.fillStyle = 'white';
-	context.textAlign = 'center';
-}
-
-// Start the game loop.
-gameLoop();
-canvas.focus();
-*/
