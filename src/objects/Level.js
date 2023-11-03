@@ -6,7 +6,6 @@ export default class Level {
         this.height = height;
         this.width = width;
         this.tiles = this.generateTiles();
-        //console.log(this.tiles);
     }
 
     update(dt){
@@ -28,24 +27,17 @@ export default class Level {
         const tileMap = new Array();
 
         this.generateBackgroundTiles(tileMap);
-        this.generateGroundTiles(tileMap);
 
         return tileMap;
     }
 
     generateBackgroundTiles(tileMap){
-        for(let y = 0; y < this.height - 1; y++){
+        for(let y = 0; y < this.height; y++){
             tileMap.push([]);
 
             for(let x = 0; x < this.width; x++){
                 tileMap[y].push(new Tile(x * Tile.SIZE, y * Tile.SIZE, false));
             }   
         }
-    }
-
-    generateGroundTiles(tileMap){
-        for(let x = 0; x < this.width; x++){
-            tileMap[this.height-2].push(new Tile(x * Tile.SIZE, (this.height-1) * Tile.SIZE, true));
-        }   
     }
 }
