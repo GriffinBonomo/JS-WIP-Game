@@ -1,11 +1,13 @@
 import { images, context } from "../../globals.js";
+import Vector from "../../lib/Vector.js";
 import Tile from "./Tile.js";
+import { getTileById } from "../helpers/leveHelper.js";
 
 export default class Level {
-    constructor(height, width) {
+    constructor(height, width, mapData) {
         this.height = height;
         this.width = width;
-        this.tiles = this.generateTiles();
+        this.tiles = this.generateTiles(mapData);
     }
 
     update(dt){
@@ -13,8 +15,6 @@ export default class Level {
     }
 
     render() {
-        //images.render("gradientBackgroundColourful", 0, 0);
-        
         this.tiles.forEach(tileRow => {
             tileRow.forEach(tile => {
                 tile.render();
@@ -23,21 +23,17 @@ export default class Level {
         
     }
 
-    generateTiles(){
+    generateTiles(mapData){
         const tileMap = new Array();
 
-        this.generateBackgroundTiles(tileMap);
-
-        return tileMap;
-    }
-
-    generateBackgroundTiles(tileMap){
-        for(let y = 0; y < this.height; y++){
+        for(let y = 0; y < mapData.length; y++){
             tileMap.push([]);
 
-            for(let x = 0; x < this.width; x++){
-                tileMap[y].push(new Tile(x * Tile.SIZE, y * Tile.SIZE, false));
+            for(let x = 0; x < mapData[0].length; x++){
+                tileMap[y].push(getTileById(mapData[y][x], new Vector(x * Tile.SIZE, y * Tile.SIZE)));
             }   
         }
+
+        return tileMap;
     }
 }

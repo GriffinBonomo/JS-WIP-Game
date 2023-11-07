@@ -4,13 +4,13 @@ import {
     CANVAS_WIDTH
 } from "../../globals.js";
 import Sprite from "../../lib/Sprite.js";
+import Vector from "../../lib/Vector.js";
 
 export default class Tile {
     static SIZE = 16;
 
-    constructor(x, y, isCollidable = false) {
-        this.x = x;
-        this.y = y;
+    constructor(position, isCollidable = false) {
+        this.position = position
         this.isCollidable = isCollidable;
 
         this.TOTAL_SPRITES = 1;
@@ -37,6 +37,6 @@ export default class Tile {
     }
     
     render(){
-        this.sprite.render(this.x, this.y);
+        this.sprite.render(this.position.x, this.position.y);
     }
 }
