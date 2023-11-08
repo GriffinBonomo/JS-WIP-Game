@@ -15,13 +15,6 @@ export default class Level {
 
     render() {
         this.tileMap.render();
-        /*
-        this.tiles.forEach(tileRow => {
-            tileRow.forEach(tile => {
-                tile.render();
-            });
-        });
-        */
     }
 
     generateTiles(mapData){

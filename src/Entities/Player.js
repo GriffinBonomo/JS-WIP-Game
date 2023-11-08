@@ -85,7 +85,6 @@ export default class Player extends Entity{
 
 
     collision(){
-        //console.log(`Valid: X = ${this.lastValidPosition.x}, Y = ${this.lastValidPosition.y}`);
         if(this.didCollideWithTiles([Direction.Right, Direction.Up, Direction.Left, Direction.Down])){
             this.velocity = new Vector(0,0);
             this.position.x = this.lastValidPosition.x;
@@ -104,7 +103,6 @@ export default class Player extends Entity{
         let offset = 0;
 
         directions.forEach(direction => {
-            //console.log("Direction" + direction);
             switch(direction){
                 case Direction.Left:
                     offset = 0;
@@ -119,7 +117,6 @@ export default class Player extends Entity{
                     offset = this.dimensions.y;
                     break;
             }
-            //console.log("Offset" + offset);
     
             if(direction == Direction.Left || direction == Direction.Right){
                 for(let i = firstTile.position.y; i <= this.position.y + this.dimensions.y; i += Tile.SIZE){
