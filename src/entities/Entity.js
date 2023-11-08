@@ -25,9 +25,16 @@ export default class Entity {
         this.level = level;
 
         this.sprites = [];
+
+        this.stateMachine = null;
+    }
+
+    changeState(state, parameters){
+        this.stateMachine.change(state, parameters);
     }
 
     update(dt){
+        this.stateMachine.update(dt);
         this.currentAnimation.update(dt);
         this.position.add(this.velocity, dt);
     }

@@ -13,6 +13,10 @@ import Sprite from "../../lib/Sprite.js";
 import Direction from "../enums/Directions.js";
 import Tile from "../objects/Tile.js";
 import Entity from "./Entity.js";
+import StateMachine from "../../lib/StateMachine.js";
+import PlayerStateName from "../enums/PlayerStateNames.js";
+import PlayerIdleState from "../states/player/PlayerIdleState.js";
+import PlayerWalkingState from "../states/player/PlayerWalkingState.js";
 
 export default class Player extends Entity{
     constructor(position, dimensions, level){
@@ -34,6 +38,12 @@ export default class Player extends Entity{
         this.currentAnimation = new Animation([0,1,2,1], 0.3);
         this.TOTAL_SPRITES = 4;
         this.sprites = this.generateSprites();
+
+        this.stateMachine = new StateMachine();
+        this.stateMachine.add(PlayerStateName.Idle, new PlayerIdleState(this));
+        this.stateMachine.add(PlayerStateName.Walking, new PlayerWalkingState(this));
+
+        this.stateMachine.change(PlayerStateName.Idle);
     }
 
     generateSprites() {
@@ -103,19 +113,6 @@ export default class Player extends Entity{
     }
 
     update(dt){
-        // MOVING
-        if(keys.a){
-            this.moveBackward();
-        }
-        if(keys.d){
-            this.moveForward();
-        }
-        if(keys.w){
-            this.moveUpward();
-        }
-        if(keys.s){
-            this.moveDownward();
-        }
         // SHOOTING
         if(keys.ArrowUp){
             keys.ArrowUp = false;
@@ -134,15 +131,11 @@ export default class Player extends Entity{
             this.shootProjectile(Direction.Right);
         }
 
-        this.collision();
-
-        this.applyFriction();
-
         this.projectiles.forEach(projectile => {
             projectile.update(dt);
         });
-
         super.update(dt);
+        
     }
 
     render(){
