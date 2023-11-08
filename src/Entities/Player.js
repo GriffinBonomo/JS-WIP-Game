@@ -11,11 +11,13 @@ import Projectile from "./Projectile.js";
 import Animation from "../../lib/Animation.js";
 import Sprite from "../../lib/Sprite.js";
 import Direction from "../enums/Directions.js";
+import Tile from "../objects/Tile.js";
 
 export default class Player {
-    constructor(position, dimensions){
+    constructor(position, dimensions, level){
         this.position = position;
         this.dimensions = dimensions;
+        this.level = level;
 
         this.velocity = new Vector(0,0);
 
@@ -86,20 +88,57 @@ export default class Player {
 
 
     collision(){
-        // Teleport to other side of map
-        if(this.position.x + this.dimensions.x < 0){
-            this.position.x = CANVAS_WIDTH;
+        if(this.didCollideWithTiles([Direction.Left])){
+            console.log("Collision");
+            this.velocity = new Vector(0,0);
         }
-        else if(this.position.x > CANVAS_WIDTH){
-            this.position.x = 0;
-        }
-        
-        if(this.position.y > CANVAS_HEIGHT){
-            this.position.y = 0;
-        }
-        else if(this.position.y + this.dimensions.y < 0){
-            this.position.y = CANVAS_HEIGHT;
-        }
+    }
+
+    getTilesByDirection(directions){
+        let firstTile = this.level.tileMap.pointToTile(this.position.x, this.position.y);
+
+        let tiles = [];
+        let offset = 0;
+
+        directions.forEach(direction => {
+            switch(direction){
+                case Direction.Left:
+                    offset = -Tile.SIZE;
+                    break;
+                case Direction.Up:
+                    offset = -Tile.SIZE;
+                    break;
+                case Direction.Right:
+                    offset = (this.position.x + this.dimensions.x);
+                    break;
+                case Direction.Down:
+                    offset = (this.position.y + this.dimensions.y);
+                    break;
+            }
+    
+            if(direction == Direction.Left || direction == Direction.Right){
+                for(let i = firstTile.position.y; i <= this.position.y + this.dimensions.y; i += Tile.SIZE){
+                    tiles.push(this.level.tileMap.pointToTile(firstTile.position.x + offset, i));
+                }
+            }
+            else if(direction == Direction.Up || direction == Direction.Down){
+                for(let i = firstTile.position.y; i <= this.position.y + this.dimensions.y; i += Tile.SIZE){
+                    tiles.push(this.level.tileMap.pointToTile(i, firstTile.position.y + offset));
+                }
+            }
+        })
+        return tiles;
+    }
+
+    getCollisionTilesByDirection(directions){
+        const tiles = this.getTilesByDirection(directions);
+
+        let collidableTiles = tiles.filter(tile => tile?.isCollidable);
+        return collidableTiles
+    }
+    didCollideWithTiles(directions){
+        const tiles = this.getCollisionTilesByDirection(directions);
+        return tiles.length !== 0;
     }
 
     applyFriction(){
@@ -143,8 +182,11 @@ export default class Player {
         }
         this.position.add(this.velocity, dt);
 
-        this.applyFriction();
         this.collision();
+        this.applyFriction();
+
+
+        
 
         this.projectiles.forEach(projectile => {
             projectile.update(dt);

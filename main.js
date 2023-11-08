@@ -50,8 +50,8 @@ stateMachine.add(GameStateName.Play, new PlayState());
 
 const game = new Game(stateMachine, context, canvas.width, canvas.height);
 
-let player = new Player(new Vector(200,200), new Vector(Tile.SIZE * 2, Tile.SIZE * 2));
 let level = new Level(30, 50, level0);
+let player = new Player(new Vector(200,200), new Vector(Tile.SIZE * 2, Tile.SIZE * 2), level);
 let hud = new HUD(player, 1);
 
 stateMachine.change(GameStateName.Play, {
