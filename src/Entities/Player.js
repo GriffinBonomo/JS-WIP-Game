@@ -83,7 +83,6 @@ export default class Player extends Entity{
         }
     }
 
-
     collision(){
         if(this.didCollideWithTiles([Direction.Right, Direction.Up, Direction.Left, Direction.Down])){
             this.velocity = new Vector(0,0);
@@ -94,53 +93,6 @@ export default class Player extends Entity{
             this.lastValidPosition.x = this.position.x;
             this.lastValidPosition.y = this.position.y;
         }
-    }
-
-    getTilesByDirection(directions){
-        let firstTile = this.level.tileMap.pointToTile(this.position.x, this.position.y);
-
-        let tiles = [];
-        let offset = 0;
-
-        directions.forEach(direction => {
-            switch(direction){
-                case Direction.Left:
-                    offset = 0;
-                    break;
-                case Direction.Up:
-                    offset = 0;
-                    break;
-                case Direction.Right:
-                    offset = this.dimensions.x;
-                    break;
-                case Direction.Down:
-                    offset = this.dimensions.y;
-                    break;
-            }
-    
-            if(direction == Direction.Left || direction == Direction.Right){
-                for(let i = firstTile.position.y; i <= this.position.y + this.dimensions.y; i += Tile.SIZE){
-                    tiles.push(this.level.tileMap.pointToTile(firstTile.position.x + offset, i));
-                }
-            }
-            else if(direction == Direction.Up || direction == Direction.Down){
-                for(let i = firstTile.position.y; i <= this.position.y + this.dimensions.y; i += Tile.SIZE){
-                    tiles.push(this.level.tileMap.pointToTile(i, firstTile.position.y + offset));
-                }
-            }
-        });
-        return tiles;
-    }
-
-    getCollisionTilesByDirection(directions){
-        const tiles = this.getTilesByDirection(directions);
-
-        let collidableTiles = tiles.filter(tile => tile?.isCollidable);
-        return collidableTiles
-    }
-    didCollideWithTiles(directions){
-        const tiles = this.getCollisionTilesByDirection(directions);
-        return tiles.length !== 0;
     }
 
     applyFriction(){
