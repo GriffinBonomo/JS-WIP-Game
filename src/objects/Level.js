@@ -1,13 +1,12 @@
 import { images, context } from "../../globals.js";
 import Vector from "../../lib/Vector.js";
 import Tile from "./Tile.js";
+import Tilemap from "./Tilemap.js";
 import { getTileById } from "../helpers/leveHelper.js";
 
 export default class Level {
     constructor(height, width, mapData) {
-        this.height = height;
-        this.width = width;
-        this.tiles = this.generateTiles(mapData);
+        this.tileMap = new Tilemap(height, width, this.generateTiles(mapData));
     }
 
     update(dt){
@@ -15,12 +14,14 @@ export default class Level {
     }
 
     render() {
+        this.tileMap.render();
+        /*
         this.tiles.forEach(tileRow => {
             tileRow.forEach(tile => {
                 tile.render();
             });
         });
-        
+        */
     }
 
     generateTiles(mapData){

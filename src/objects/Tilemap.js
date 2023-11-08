@@ -1,4 +1,4 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../../globals";
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../../globals.js";
 import Tile from "./Tile.js";
 
 export default class Tilemap {
