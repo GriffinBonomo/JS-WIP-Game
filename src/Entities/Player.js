@@ -12,15 +12,11 @@ import Animation from "../../lib/Animation.js";
 import Sprite from "../../lib/Sprite.js";
 import Direction from "../enums/Directions.js";
 import Tile from "../objects/Tile.js";
+import Entity from "./Entity.js";
 
-export default class Player {
+export default class Player extends Entity{
     constructor(position, dimensions, level){
-        this.position = position;
-        this.lastValidPosition = new Vector(position.x, position.y);
-        this.dimensions = dimensions;
-        this.level = level;
-
-        this.velocity = new Vector(0,0);
+        super(position, dimensions, level);
 
         // Acceleration 
         this.ddx = 0;
@@ -191,38 +187,20 @@ export default class Player {
 
         this.collision();
 
-        this.position.add(this.velocity, dt);
-
         this.applyFriction();
 
         this.projectiles.forEach(projectile => {
             projectile.update(dt);
         });
 
-        this.currentAnimation.update(dt);
+        super.update(dt);
     }
 
     render(){
-        /*
-        if(this.dx > 0){
-            this.sprites[this.currentAnimation.getCurrentFrame()].render(Math.floor(this.x), Math.floor(this.y));
-        }
-        else if(this.dx < 0){
-            context.save();
-			context.translate(Math.floor(this.x) + this.width, Math.floor(this.y));
-			context.scale(-1, 1);
-			this.sprites[this.currentAnimation.getCurrentFrame()].render(0, 0);
-			context.restore();
-        } 
-        else{
-            this.sprites[0].
-        }
-        */
         this.projectiles.forEach(projectile => {
             projectile.render();
         });
 
-        this.sprites[this.currentAnimation.getCurrentFrame()].render(Math.floor(this.position.x), Math.floor(this.position.y));
-
+        super.render();
     }
 }
