@@ -16,6 +16,7 @@ import Tile from "../objects/Tile.js";
 export default class Player {
     constructor(position, dimensions, level){
         this.position = position;
+        this.lastValidPosition = new Vector(position.x, position.y);
         this.dimensions = dimensions;
         this.level = level;
 
@@ -27,7 +28,7 @@ export default class Player {
 
         // Limits
         this.groundAcceleration = 100;
-        this.maxSpeed = 500;
+        this.maxSpeed = 300;
 
         // Abilities
         this.projectiles = [];
@@ -88,9 +89,15 @@ export default class Player {
 
 
     collision(){
-        if(this.didCollideWithTiles([Direction.Left])){
-            console.log("Collision");
+        //console.log(`Valid: X = ${this.lastValidPosition.x}, Y = ${this.lastValidPosition.y}`);
+        if(this.didCollideWithTiles([Direction.Right, Direction.Up, Direction.Left, Direction.Down])){
             this.velocity = new Vector(0,0);
+            this.position.x = this.lastValidPosition.x;
+            this.position.y = this.lastValidPosition.y;          
+        }
+        else{
+            this.lastValidPosition.x = this.position.x;
+            this.lastValidPosition.y = this.position.y;
         }
     }
 
@@ -101,20 +108,22 @@ export default class Player {
         let offset = 0;
 
         directions.forEach(direction => {
+            //console.log("Direction" + direction);
             switch(direction){
                 case Direction.Left:
-                    offset = -Tile.SIZE;
+                    offset = 0;
                     break;
                 case Direction.Up:
-                    offset = -Tile.SIZE;
+                    offset = 0;
                     break;
                 case Direction.Right:
-                    offset = (this.position.x + this.dimensions.x);
+                    offset = this.dimensions.x;
                     break;
                 case Direction.Down:
-                    offset = (this.position.y + this.dimensions.y);
+                    offset = this.dimensions.y;
                     break;
             }
+            //console.log("Offset" + offset);
     
             if(direction == Direction.Left || direction == Direction.Right){
                 for(let i = firstTile.position.y; i <= this.position.y + this.dimensions.y; i += Tile.SIZE){
@@ -126,7 +135,7 @@ export default class Player {
                     tiles.push(this.level.tileMap.pointToTile(i, firstTile.position.y + offset));
                 }
             }
-        })
+        });
         return tiles;
     }
 
@@ -162,7 +171,6 @@ export default class Player {
         if(keys.s){
             this.moveDownward();
         }
-        
         // SHOOTING
         if(keys.ArrowUp){
             keys.ArrowUp = false;
@@ -180,13 +188,12 @@ export default class Player {
             keys.ArrowRight = false;
             this.shootProjectile(Direction.Right);
         }
-        this.position.add(this.velocity, dt);
 
         this.collision();
+
+        this.position.add(this.velocity, dt);
+
         this.applyFriction();
-
-
-        
 
         this.projectiles.forEach(projectile => {
             projectile.update(dt);

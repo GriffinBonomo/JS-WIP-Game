@@ -13,7 +13,7 @@ import {
 import PlayState from "./src/states/PlayState.js";
 import HUD from "./src/hud.js";
 import Level from "./src/objects/Level.js";
-import Player from "./src/entities/Player.js";
+import Player from "./src/Entities/Player.js";
 import Tile from "./src/objects/Tile.js";
 import Vector from "./lib/Vector.js";
 
