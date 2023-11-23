@@ -95,7 +95,6 @@ export default class Player extends Entity{
 
     collision(){
         if(this.didCollideWithTiles([Direction.Right, Direction.Up, Direction.Left, Direction.Down])){
-            this.velocity = new Vector(0,0);
             this.position.x = this.lastValidPosition.x;
             this.position.y = this.lastValidPosition.y;          
         }
@@ -134,8 +133,8 @@ export default class Player extends Entity{
         this.projectiles.forEach(projectile => {
             projectile.update(dt);
         });
-        super.update(dt);
-        
+
+        super.update(dt);    
     }
 
     render(){

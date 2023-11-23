@@ -34,9 +34,9 @@ export default class Entity {
     }
 
     update(dt){
+        this.position.add(this.velocity, dt);
         this.stateMachine.update(dt);
         this.currentAnimation.update(dt);
-        this.position.add(this.velocity, dt);
     }
 
     render(){
