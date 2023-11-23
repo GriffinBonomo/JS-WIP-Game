@@ -94,13 +94,21 @@ export default class Player extends Entity{
     }
 
     collision(){
-        if(this.didCollideWithTiles([Direction.Right, Direction.Up, Direction.Left, Direction.Down])){
-            this.position.x = this.lastValidPosition.x;
-            this.position.y = this.lastValidPosition.y;          
+        if(this.velocity.x != 0){
+            if(this.didCollideWithTiles([Direction.Right, Direction.Left])){
+                this.position.x = this.lastValidPosition.x;
+            }
+            else{
+                this.lastValidPosition.x = this.position.x;
+            }
         }
-        else{
-            this.lastValidPosition.x = this.position.x;
-            this.lastValidPosition.y = this.position.y;
+        if(this.velocity.y != 0){
+            if(this.didCollideWithTiles([Direction.Up, Direction.Down])){
+                this.position.y = this.lastValidPosition.y;
+            }
+            else{
+                this.lastValidPosition.y = this.position.y;
+            }
         }
     }
 

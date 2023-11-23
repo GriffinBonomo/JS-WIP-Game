@@ -80,7 +80,7 @@ export default class Entity {
                 }
             }
             else if(direction == Direction.Up || direction == Direction.Down){
-                for(let i = firstTile.position.y; i <= this.position.y + this.dimensions.y; i += Tile.SIZE){
+                for(let i = firstTile.position.x; i <= this.position.x + this.dimensions.x; i += Tile.SIZE){
                     tiles.push(this.level.tileMap.pointToTile(i, firstTile.position.y + offset));
                 }
             }
