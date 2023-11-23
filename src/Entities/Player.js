@@ -94,6 +94,7 @@ export default class Player extends Entity{
     }
 
     collision(){
+        // For some reason the order of these determines which direction will cause sticking when colliding with tiles??
         if(this.velocity.x != 0){
             if(this.didCollideWithTiles([Direction.Right, Direction.Left])){
                 this.position.x = this.lastValidPosition.x;
