@@ -5,6 +5,7 @@ import {
 } from "../../globals.js";
 import Sprite from "../../lib/Sprite.js";
 import Vector from "../../lib/Vector.js";
+import ImageName from "../enums/ImageName.js";
 
 export default class Tile {
     static SIZE = 16;
@@ -26,7 +27,7 @@ export default class Tile {
 
         for(let i = 0; i < this.TOTAL_SPRITES; i++){
             sprites.push(new Sprite(
-				images.get("tiles"),
+				images.get(ImageName.Tiles),
                 i * Tile.SIZE,
 				spriteOffset,
 				Tile.SIZE,

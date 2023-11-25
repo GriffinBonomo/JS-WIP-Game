@@ -1,5 +1,5 @@
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../../globals.js";
-import Tile from "./Tile.js";
+import Tile from "../services/Tile.js";
 
 export default class Tilemap {
     constructor(height, width, tiles){

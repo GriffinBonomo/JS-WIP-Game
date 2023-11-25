@@ -1,6 +1,6 @@
 import { images, context } from "../../globals.js";
 import Vector from "../../lib/Vector.js";
-import Tile from "./Tile.js";
+import Tile from "../services/Tile.js";
 import Tilemap from "./Tilemap.js";
 import { getTileById } from "../helpers/leveHelper.js";
 

@@ -14,7 +14,7 @@ import PlayState from "./src/states/PlayState.js";
 import HUD from "./src/hud.js";
 import Level from "./src/objects/Level.js";
 import Player from "./src/entities/Player.js";
-import Tile from "./src/objects/Tile.js";
+import Tile from "./src/services/Tile.js";
 import Vector from "./lib/Vector.js";
 
 import level0 from "./src/maps/level0.js";

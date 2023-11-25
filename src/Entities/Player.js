@@ -11,12 +11,13 @@ import Projectile from "./Projectile.js";
 import Animation from "../../lib/Animation.js";
 import Sprite from "../../lib/Sprite.js";
 import Direction from "../enums/Directions.js";
-import Tile from "../objects/Tile.js";
+import Tile from "../services/Tile.js";
 import Entity from "./Entity.js";
 import StateMachine from "../../lib/StateMachine.js";
 import PlayerStateName from "../enums/PlayerStateNames.js";
 import PlayerIdleState from "../states/player/PlayerIdleState.js";
 import PlayerWalkingState from "../states/player/PlayerWalkingState.js";
+import ImageName from "../enums/ImageName.js";
 
 export default class Player extends Entity{
     constructor(position, dimensions, level){
@@ -51,7 +52,7 @@ export default class Player extends Entity{
 
         for(let i = 0; i < this.TOTAL_SPRITES; i++){
             sprites.push(new Sprite(
-				images.get("character"),
+				images.get(ImageName.Player),
 				i * this.dimensions.x,
 				0,
 				this.dimensions.x,

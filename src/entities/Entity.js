@@ -12,7 +12,7 @@ import Projectile from "./Projectile.js";
 import Animation from "../../lib/Animation.js";
 import Sprite from "../../lib/Sprite.js";
 import Direction from "../enums/Directions.js";
-import Tile from "../objects/Tile.js";
+import Tile from "../services/Tile.js";
 
 export default class Entity {
     constructor(position, dimensions, level) {

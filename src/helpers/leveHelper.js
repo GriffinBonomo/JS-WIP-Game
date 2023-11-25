@@ -1,4 +1,4 @@
-import Tile from "../objects/Tile.js";
+import Tile from "../services/Tile.js";
 
 export function getTileById(id, position){
     switch(id){
