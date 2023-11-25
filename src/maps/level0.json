@@ -35,7 +35,7 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          "height":30,
          "id":1,
-         "name":"Background",
+         "name":"Bottom",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
@@ -93,7 +93,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/..\/..\/tileset.tsx"
+         "source":"..\/..\/assets\/maps\/Tileset.tsx"
         }],
  "tilewidth":16,
  "type":"map",
