@@ -1,43 +1,18 @@
-import {
-    images,
-    CANVAS_HEIGHT,
-    CANVAS_WIDTH
-} from "../../globals.js";
-import Sprite from "../../lib/Sprite.js";
-import Vector from "../../lib/Vector.js";
-import ImageName from "../enums/ImageName.js";
-
 export default class Tile {
-    static SIZE = 16;
+	static SIZE = 16;
 
-    constructor(position, isCollidable = false) {
-        this.position = position
-        this.isCollidable = isCollidable;
+	/**
+	 * Represents one tile in a Layer and on the screen.
+	 *
+	 * @param {number} id
+	 * @param {array} sprites
+	 */
+	constructor(id, sprites) {
+		this.sprites = sprites;
+		this.id = id;
+	}
 
-        this.TOTAL_SPRITES = 1;
-
-        this.sprite = this.generateRandomTileSprite();
-    }
-
-    generateRandomTileSprite(){
-        const sprites = [];
-
-        // Ugly P.O.S testing feature to allow me to change between ground and grass
-        let spriteOffset = this.isCollidable? 16: 0;
-
-        for(let i = 0; i < this.TOTAL_SPRITES; i++){
-            sprites.push(new Sprite(
-				images.get(ImageName.Tiles),
-                i * Tile.SIZE,
-				spriteOffset,
-				Tile.SIZE,
-				Tile.SIZE,
-			));
-        }  
-        return sprites[Math.floor(Math.random() * sprites.length)];  
-    }
-    
-    render(){
-        this.sprite.render(this.position.x, this.position.y);
-    }
+	render(x, y) {
+		this.sprites[this.id].render(x * Tile.SIZE, y * Tile.SIZE);
+	}
 }

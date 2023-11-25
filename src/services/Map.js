@@ -11,7 +11,8 @@ import {
 	context,
 	DEBUG,
 	images,
-} from "../globals.js";
+} from "../../globals.js"
+import HUD from "../hud.js";
 
 export default class Map {
 	/**
@@ -29,19 +30,20 @@ export default class Map {
 
 		this.bottomLayer = new Layer(mapDefinition.layers[Layer.BOTTOM], sprites);
 		this.collisionLayer = new Layer(mapDefinition.layers[Layer.COLLISION], sprites);
-		this.topLayer = new Layer(mapDefinition.layers[Layer.TOP], sprites);
-		this.player = new Player({ position: new Vector(7, 5) }, this);
+		this.player = new Player(new Vector(200,200), new Vector(Tile.SIZE * 2, Tile.SIZE * 2), this);
+        this.hud = new HUD(this.player, 1);
 	}
 
 	update(dt) {
 		this.player.update(dt);
+        this.hud.update(dt);
 	}
 
 	render() {
 		this.bottomLayer.render();
 		this.collisionLayer.render();
 		this.player.render();
-		this.topLayer.render();
+        this.hud.render();
 
 		if (DEBUG) {
 			Map.renderGrid();

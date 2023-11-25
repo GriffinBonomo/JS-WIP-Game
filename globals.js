@@ -12,3 +12,5 @@ export const keys = {};
 export const images = new Images(context);
 export const fonts = new Fonts();
 export const stateMachine = new StateMachine();
+
+export const DEBUG = false;

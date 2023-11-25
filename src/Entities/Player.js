@@ -20,8 +20,10 @@ import PlayerWalkingState from "../states/player/PlayerWalkingState.js";
 import ImageName from "../enums/ImageName.js";
 
 export default class Player extends Entity{
-    constructor(position, dimensions, level){
-        super(position, dimensions, level);
+    constructor(position, dimensions, map){
+        super(position, dimensions, map);
+
+        this.map = map;
 
         // Acceleration 
         this.ddx = 0;

@@ -1,22 +1,15 @@
 import State from "../../lib/State.js";
-import GameStateName from "../enums/GameStateNames.js";
-import {
-    CANVAS_HEIGHT,
-    CANVAS_WIDTH,
-    context,
-    stateMachine
-} from "../../globals.js";
+import Map from "../services/Map.js";
 
 export default class PlayState extends State {
-    constructor() {
+    constructor(mapDefinition) {
         super();
+
+        this.map = new Map(mapDefinition);
     }
 
     enter(parameters){
-        this.level = parameters.level;
-        this.player = parameters.player;
-        // Change this later, HUD should be managed better
-        this.hud = parameters.hud;
+
     }
 
     exit(){
@@ -24,9 +17,7 @@ export default class PlayState extends State {
     }
 
     update(dt){
-        this.level.update(dt);
-        this.player.update(dt);
-        this.hud.update(dt);
+        this.map.update(dt);
     }
 
     render(){
@@ -39,8 +30,6 @@ export default class PlayState extends State {
         context.fillStyle = 'white';
         context.textAlign = 'center';
         */
-        this.level.render();
-        this.player.render();
-        this.hud.render();
+        this.map.render();
     }
 }
