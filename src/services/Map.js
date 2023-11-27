@@ -29,6 +29,7 @@ export default class Map {
 		);
 
 		this.bottomLayer = new Layer(mapDefinition.layers[Layer.BOTTOM], sprites);
+		this.decorationsLayer = new Layer(mapDefinition.layers[Layer.DECORATIONS], sprites);
 		this.collisionLayer = new Layer(mapDefinition.layers[Layer.COLLISION], sprites);
 		this.player = new Player(new Vector(200,200), new Vector(Tile.SIZE * 2, Tile.SIZE * 2), this);
         this.hud = new HUD(this.player, 1);
@@ -41,6 +42,7 @@ export default class Map {
 
 	render() {
 		this.bottomLayer.render();
+		this.decorationsLayer.render();
 		this.collisionLayer.render();
 		this.player.render();
         this.hud.render();
