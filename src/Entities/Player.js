@@ -30,8 +30,8 @@ export default class Player extends Entity{
         this.ddy = 0;
 
         // Limits
-        this.groundAcceleration = 100;
-        this.maxSpeed = 300;
+        this.groundAcceleration = 150;
+        this.maxSpeed = 200;
 
         // Abilities
         this.projectiles = [];
@@ -117,7 +117,7 @@ export default class Player extends Entity{
     }
 
     applyFriction(){
-        let frictionCoefficient = 0.85;
+        let frictionCoefficient = 0.8;
 
         this.velocity.x = Math.trunc(this.velocity.x * frictionCoefficient);
         this.velocity.y = Math.trunc(this.velocity.y * frictionCoefficient);
