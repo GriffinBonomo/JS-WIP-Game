@@ -74,7 +74,6 @@ export default class Map {
 				context.stroke();
 			}
 		}
-
 		context.restore();
 	}
 }

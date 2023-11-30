@@ -15,14 +15,14 @@ import Direction from "../enums/Directions.js";
 import Tile from "../services/Tile.js";
 
 export default class Entity {
-    constructor(position, dimensions, level) {
+    constructor(position, dimensions, map) {
         this.position = position;
         this.lastValidPosition = new Vector(position.x, position.y);
 
         this.velocity = new Vector(0,0);
 
         this.dimensions = dimensions;
-        this.level = level;
+        this.map = map;
 
         this.sprites = [];
 
@@ -52,50 +52,25 @@ export default class Entity {
         }
     }
 
-    getTilesByDirection(directions){
-        let firstTile = this.level.tileMap.pointToTile(this.position.x, this.position.y);
-
+    // Currently checks all tiles, this should eventually take a direction to save on wasted resources
+    getCollisionTiles(){
         let tiles = [];
-        let offset = 0;
 
-        directions.forEach(direction => {
-            switch(direction){
-                case Direction.Left:
-                    offset = 0;
-                    break;
-                case Direction.Up:
-                    offset = 0;
-                    break;
-                case Direction.Right:
-                    offset = this.dimensions.x;
-                    break;
-                case Direction.Down:
-                    offset = this.dimensions.y;
-                    break;
-            }
-    
-            if(direction == Direction.Left || direction == Direction.Right){
-                for(let i = firstTile.position.y; i <= this.position.y + this.dimensions.y; i += Tile.SIZE){
-                    tiles.push(this.level.tileMap.pointToTile(firstTile.position.x + offset, i));
+        for(let i = 0; i < this.dimensions.x; i += Tile.SIZE){
+            for(let j = 0; j < this.dimensions.y; j += Tile.SIZE){
+                console.log(`${Math.floor((this.position.x + i) / Tile.SIZE)}, ${Math.floor((this.position.y + j) / Tile.SIZE)}`)
+                let tile = this.map.collisionLayer.getTile(Math.round((this.position.x + i) / Tile.SIZE), Math.round((this.position.y + j) / Tile.SIZE));
+                if(tile){
+                    tiles.push(tile);
                 }
             }
-            else if(direction == Direction.Up || direction == Direction.Down){
-                for(let i = firstTile.position.x; i <= this.position.x + this.dimensions.x; i += Tile.SIZE){
-                    tiles.push(this.level.tileMap.pointToTile(i, firstTile.position.y + offset));
-                }
-            }
-        });
+        }
+        console.log(tiles);
         return tiles;
     }
 
-    getCollisionTilesByDirection(directions){
-        const tiles = this.getTilesByDirection(directions);
-
-        let collidableTiles = tiles.filter(tile => tile?.isCollidable);
-        return collidableTiles
-    }
-    didCollideWithTiles(directions){
-        const tiles = this.getCollisionTilesByDirection(directions);
+    didCollideWithTiles(){
+        const tiles = this.getCollisionTiles();
         return tiles.length !== 0;
     }
 }
