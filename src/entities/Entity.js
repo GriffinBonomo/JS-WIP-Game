@@ -73,27 +73,27 @@ export default class Entity {
         let directionCollisions = [0,0,0,0];
 
         // top side
-        for(let i = 0; i <= this.dimensions.x; i+= Tile.SIZE){
+        for(let i = 0; i < this.dimensions.x; i+= Tile.SIZE){
             if(this.map.collisionLayer.getTile(Math.floor((this.position.x + i) / Tile.SIZE), Math.floor((this.position.y) / Tile.SIZE))){
                 directionCollisions[0]++;
             }
         }
         // bottom side
-        for(let i = 0; i <= this.dimensions.x; i+= Tile.SIZE){
+        for(let i = 0; i < this.dimensions.x; i+= Tile.SIZE){
             if(this.map.collisionLayer.getTile(Math.floor((this.position.x + i) / Tile.SIZE), Math.floor((this.position.y + this.dimensions.y)) / Tile.SIZE)){
                 directionCollisions[1]++;
             }
         }
 
         // left side
-        for(let i = 0; i <= this.dimensions.y; i+= Tile.SIZE){
+        for(let i = 0; i < this.dimensions.y; i+= Tile.SIZE){
             if(this.map.collisionLayer.getTile(Math.floor((this.position.x) / Tile.SIZE), Math.floor((this.position.y + i) / Tile.SIZE))){
                 directionCollisions[2]++;
             }
         }
 
         // right side
-        for(let i = 0; i <= this.dimensions.y; i+= Tile.SIZE){
+        for(let i = 0; i < this.dimensions.y; i+= Tile.SIZE){
             if(this.map.collisionLayer.getTile(Math.floor((this.position.x + this.dimensions.x) / Tile.SIZE), Math.floor((this.position.y + i) / Tile.SIZE))){
                 directionCollisions[3]++;
             }
