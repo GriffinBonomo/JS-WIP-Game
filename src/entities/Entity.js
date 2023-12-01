@@ -69,43 +69,61 @@ export default class Entity {
     }
 
     getCollisionDirection(){
-        // check all sides of hitbox, whichever has the most oob tiles is the collision side
-        let directionCollisions = {
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0
-        };
+        // top, bottom, left, right
+        let directionCollisions = [0,0,0,0];
 
         // top side
         for(let i = 0; i <= this.dimensions.x; i+= Tile.SIZE){
-            if(this.map.collisionLayer.getTile(Math.round((this.position.x + i) / Tile.SIZE), Math.round((this.position.y) / Tile.SIZE))){
-                directionCollisions.top++;
+            if(this.map.collisionLayer.getTile(Math.floor((this.position.x + i) / Tile.SIZE), Math.floor((this.position.y) / Tile.SIZE))){
+                directionCollisions[0]++;
             }
         }
         // bottom side
         for(let i = 0; i <= this.dimensions.x; i+= Tile.SIZE){
-            if(this.map.collisionLayer.getTile(Math.round((this.position.x + i) / Tile.SIZE), Math.round((this.position.y + this.dimensions.y)) / Tile.SIZE)){
-                directionCollisions.bottom++;
+            if(this.map.collisionLayer.getTile(Math.floor((this.position.x + i) / Tile.SIZE), Math.floor((this.position.y + this.dimensions.y)) / Tile.SIZE)){
+                directionCollisions[1]++;
             }
         }
 
         // left side
         for(let i = 0; i <= this.dimensions.y; i+= Tile.SIZE){
-            if(this.map.collisionLayer.getTile(Math.round((this.position.x) / Tile.SIZE), Math.round((this.position.y + i) / Tile.SIZE))){
-                directionCollisions.left++;
+            if(this.map.collisionLayer.getTile(Math.floor((this.position.x) / Tile.SIZE), Math.floor((this.position.y + i) / Tile.SIZE))){
+                directionCollisions[2]++;
             }
         }
 
         // right side
         for(let i = 0; i <= this.dimensions.y; i+= Tile.SIZE){
-            if(this.map.collisionLayer.getTile(Math.round((this.position.x + this.dimensions.x) / Tile.SIZE), Math.round((this.position.y + i) / Tile.SIZE))){
-                directionCollisions.right++;
+            if(this.map.collisionLayer.getTile(Math.floor((this.position.x + this.dimensions.x) / Tile.SIZE), Math.floor((this.position.y + i) / Tile.SIZE))){
+                directionCollisions[3]++;
             }
         }
         
         console.log(directionCollisions);
-        return directionCollisions;
+
+        let max = 0;
+        let highestIndex = 0;
+        for(let i = 0; i < directionCollisions.length; i++){
+            if(directionCollisions[i] > max){
+                highestIndex = i;
+                max = directionCollisions[i];
+            }
+        }
+
+        if(max === 0)
+            return null;
+
+        switch(highestIndex){
+            case 0:
+                return Direction.Up;
+            case 1: 
+                return Direction.Down;
+            case 2:
+                return Direction.Left;
+            case 3:
+                return Direction.Right;
+        }
+        //return directionCollisions;
     }
 
     didCollideWithTiles(){
