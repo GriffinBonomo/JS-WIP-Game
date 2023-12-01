@@ -75,12 +75,14 @@ export default class Entity {
         // top side
         for(let i = 0; i < this.dimensions.x; i+= Tile.SIZE){
             if(this.map.collisionLayer.getTile(Math.floor((this.position.x + i) / Tile.SIZE), Math.floor((this.position.y) / Tile.SIZE))){
+                console.log(`Top: ${this.position.x + i} | ${this.position.y}`)
                 directionCollisions[0]++;
             }
         }
         // bottom side
         for(let i = 0; i < this.dimensions.x; i+= Tile.SIZE){
             if(this.map.collisionLayer.getTile(Math.floor((this.position.x + i) / Tile.SIZE), Math.floor((this.position.y + this.dimensions.y)) / Tile.SIZE)){
+                console.log(`Bottom: ${this.position.x + i} | ${this.position.y + this.dimensions.y}`)
                 directionCollisions[1]++;
             }
         }
@@ -88,6 +90,7 @@ export default class Entity {
         // left side
         for(let i = 0; i < this.dimensions.y; i+= Tile.SIZE){
             if(this.map.collisionLayer.getTile(Math.floor((this.position.x) / Tile.SIZE), Math.floor((this.position.y + i) / Tile.SIZE))){
+                console.log(`Left: ${this.position.x + i} | ${this.position.y + this.dimensions.y}`)
                 directionCollisions[2]++;
             }
         }
@@ -95,6 +98,7 @@ export default class Entity {
         // right side
         for(let i = 0; i < this.dimensions.y; i+= Tile.SIZE){
             if(this.map.collisionLayer.getTile(Math.floor((this.position.x + this.dimensions.x) / Tile.SIZE), Math.floor((this.position.y + i) / Tile.SIZE))){
+                console.log(`Right: ${this.position.x + i} | ${this.position.y + this.dimensions.y}`)
                 directionCollisions[3]++;
             }
         }

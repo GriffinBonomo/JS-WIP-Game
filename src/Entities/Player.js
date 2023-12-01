@@ -111,9 +111,7 @@ export default class Player extends Entity{
         else{
             this.lastValidPosition.x = this.position.x;
             this.lastValidPosition.y = this.position.y;
-        }
-
-        
+        }  
     }
 
     applyFriction(){
