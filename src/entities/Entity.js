@@ -34,8 +34,8 @@ export default class Entity {
     }
 
     update(dt){
-        this.position.add(this.velocity, dt);
         this.stateMachine.update(dt);
+        this.position.add(this.velocity, dt);
         this.currentAnimation.update(dt);
     }
 
@@ -56,10 +56,9 @@ export default class Entity {
     getCollisionTiles(){
         let tiles = [];
 
-        for(let i = 0; i < this.dimensions.x; i += Tile.SIZE){
-            for(let j = 0; j < this.dimensions.y; j += Tile.SIZE){
-                //console.log(`${Math.floor((this.position.x + i) / Tile.SIZE)}, ${Math.floor((this.position.y + j) / Tile.SIZE)}`)
-                let tile = this.map.collisionLayer.getTile(Math.round((this.position.x + i) / Tile.SIZE), Math.round((this.position.y + j) / Tile.SIZE));
+        for(let i = 0; i < this.dimensions.y; i += Tile.SIZE){
+            for(let j = 0; j < this.dimensions.x; j += Tile.SIZE){
+                let tile = this.map.collisionLayer.getTile(Math.round((this.position.x + j) / Tile.SIZE), Math.round((this.position.y + i) / Tile.SIZE));
                 if(tile){
                     tiles.push(tile);
                 }
@@ -68,71 +67,23 @@ export default class Entity {
         return tiles;
     }
 
-    getCollisionDirection(){
-        // top, bottom, left, right
-        let directionCollisions = [0,0,0,0];
+    velocityAfterCollision(dt){
+        const oldPosition = new Vector(this.position.x, this.position.y);
 
-        // top side
-        for(let i = 0; i < this.dimensions.x; i+= Tile.SIZE){
-            if(this.map.collisionLayer.getTile(Math.floor((this.position.x + i) / Tile.SIZE), Math.floor((this.position.y) / Tile.SIZE))){
-                console.log(`Top: ${this.position.x + i} | ${this.position.y}`)
-                directionCollisions[0]++;
-            }
+        // Handling horizontal collision
+        this.position.add(new Vector(this.velocity.x, 0), dt);
+
+        if(this.getCollisionTiles().length > 0){
+            this.velocity.x = 0;
         }
-        // bottom side
-        for(let i = 0; i < this.dimensions.x; i+= Tile.SIZE){
-            if(this.map.collisionLayer.getTile(Math.floor((this.position.x + i) / Tile.SIZE), Math.floor((this.position.y + this.dimensions.y)) / Tile.SIZE)){
-                console.log(`Bottom: ${this.position.x + i} | ${this.position.y + this.dimensions.y}`)
-                directionCollisions[1]++;
-            }
+        this.position.x = oldPosition.x;
+
+        // Handle vertical collision
+        this.position.add(new Vector(0, this.velocity.y), dt);
+
+        if(this.getCollisionTiles().length > 0){
+            this.velocity.y = 0;
         }
-
-        // left side
-        for(let i = 0; i < this.dimensions.y; i+= Tile.SIZE){
-            if(this.map.collisionLayer.getTile(Math.floor((this.position.x) / Tile.SIZE), Math.floor((this.position.y + i) / Tile.SIZE))){
-                console.log(`Left: ${this.position.x + i} | ${this.position.y + this.dimensions.y}`)
-                directionCollisions[2]++;
-            }
-        }
-
-        // right side
-        for(let i = 0; i < this.dimensions.y; i+= Tile.SIZE){
-            if(this.map.collisionLayer.getTile(Math.floor((this.position.x + this.dimensions.x) / Tile.SIZE), Math.floor((this.position.y + i) / Tile.SIZE))){
-                console.log(`Right: ${this.position.x + i} | ${this.position.y + this.dimensions.y}`)
-                directionCollisions[3]++;
-            }
-        }
-        
-        console.log(directionCollisions);
-
-        let max = 0;
-        let highestIndex = 0;
-        for(let i = 0; i < directionCollisions.length; i++){
-            if(directionCollisions[i] > max){
-                highestIndex = i;
-                max = directionCollisions[i];
-            }
-        }
-
-        if(max === 0)
-            return null;
-
-        switch(highestIndex){
-            case 0:
-                return Direction.Up;
-            case 1: 
-                return Direction.Down;
-            case 2:
-                return Direction.Left;
-            case 3:
-                return Direction.Right;
-        }
-        //return directionCollisions;
-    }
-
-    didCollideWithTiles(){
-        this.getCollisionDirection();
-        const tiles = this.getCollisionTiles();
-        return tiles.length !== 0;
+        this.position.y = oldPosition.y;
     }
 }

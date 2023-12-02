@@ -96,24 +96,6 @@ export default class Player extends Entity{
         }
     }
 
-    collision(){
-
-        const collisionDirection = this.getCollisionDirection();
-
-        if(collisionDirection){
-            if(collisionDirection == Direction.Down || collisionDirection == Direction.Up){
-                this.position.y = this.lastValidPosition.y;
-            }
-            if(collisionDirection == Direction.Left || collisionDirection == Direction.Right){
-                this.position.x = this.lastValidPosition.x;
-            }
-        }
-        else{
-            this.lastValidPosition.x = this.position.x;
-            this.lastValidPosition.y = this.position.y;
-        }  
-    }
-
     applyFriction(){
         let frictionCoefficient = 0.8;
 

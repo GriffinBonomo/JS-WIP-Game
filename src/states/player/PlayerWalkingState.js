@@ -3,7 +3,7 @@ import Direction from "../../enums/Directions.js";
 import PlayerStateName from "../../enums/PlayerStateNames.js";
 import State from "../../../lib/State.js";
 import Animation from "../../../lib/Animation.js";
-import Player from "../../entities/Player.js";
+import Player from "../../Entities/Player.js";
 
 export default class PlayerWalkingState extends State{
     constructor(player){
@@ -30,9 +30,8 @@ export default class PlayerWalkingState extends State{
         if(keys.s){
             this.player.moveDownward();
         }
-        // Do directional collision checking here!
-
-        this.player.collision();
+        
+        this.player.velocityAfterCollision(dt);
         this.player.applyFriction();
 
         if(this.player.velocity.x == 0 && this.player.velocity.y == 0){
