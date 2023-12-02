@@ -12,12 +12,9 @@ import {
 } from "./globals.js";
 import PlayState from "./src/states/PlayState.js";
 import HUD from "./src/hud.js";
-import Level from "./src/objects/Level.js";
 import Player from "./src/entities/Player.js";
-import Tile from "./src/objects/Tile.js";
+import Tile from "./src/services/Tile.js";
 import Vector from "./lib/Vector.js";
-
-import level0 from "./src/maps/level0.js";
 
 // Set the dimensions of the play area.
 canvas.width = CANVAS_WIDTH;
@@ -32,6 +29,7 @@ const {
 	images: imageDefinitions,
 	fonts: fontDefinitions,
 } = await fetch('./config.json').then((response) => response.json());
+const mapDefinition = await fetch(`src/maps/level0.json`).then((response) => response.json());
 
 // Load Assets
 images.load(imageDefinitions);
@@ -46,19 +44,12 @@ canvas.addEventListener('keyup', event => {
 	keys[event.key] = false;
 });
 
-stateMachine.add(GameStateName.Play, new PlayState());
+stateMachine.add(GameStateName.Play, new PlayState(mapDefinition));
 
-const game = new Game(stateMachine, context, canvas.width, canvas.height);
+const game = new Game(stateMachine, context, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-let level = new Level(30, 50, level0);
-let player = new Player(new Vector(200,200), new Vector(Tile.SIZE * 2, Tile.SIZE * 2), level);
-let hud = new HUD(player, 1);
 
-stateMachine.change(GameStateName.Play, {
-	player: player,
-	level: level,
-	hud: hud,
-});
+stateMachine.change(GameStateName.Play);
 
 game.start();
 

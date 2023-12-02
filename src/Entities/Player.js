@@ -11,24 +11,27 @@ import Projectile from "./Projectile.js";
 import Animation from "../../lib/Animation.js";
 import Sprite from "../../lib/Sprite.js";
 import Direction from "../enums/Directions.js";
-import Tile from "../objects/Tile.js";
+import Tile from "../services/Tile.js";
 import Entity from "./Entity.js";
 import StateMachine from "../../lib/StateMachine.js";
 import PlayerStateName from "../enums/PlayerStateNames.js";
 import PlayerIdleState from "../states/player/PlayerIdleState.js";
 import PlayerWalkingState from "../states/player/PlayerWalkingState.js";
+import ImageName from "../enums/ImageName.js";
 
 export default class Player extends Entity{
-    constructor(position, dimensions, level){
-        super(position, dimensions, level);
+    constructor(position, dimensions, map){
+        super(position, dimensions, map);
+
+        this.map = map;
 
         // Acceleration 
         this.ddx = 0;
         this.ddy = 0;
 
         // Limits
-        this.groundAcceleration = 100;
-        this.maxSpeed = 300;
+        this.groundAcceleration = 150;
+        this.maxSpeed = 200;
 
         // Abilities
         this.projectiles = [];
@@ -51,7 +54,7 @@ export default class Player extends Entity{
 
         for(let i = 0; i < this.TOTAL_SPRITES; i++){
             sprites.push(new Sprite(
-				images.get("character"),
+				images.get(ImageName.Player),
 				i * this.dimensions.x,
 				0,
 				this.dimensions.x,
@@ -93,28 +96,8 @@ export default class Player extends Entity{
         }
     }
 
-    collision(){
-        // For some reason the order of these determines which direction will cause sticking when colliding with tiles??
-        if(this.velocity.x != 0){
-            if(this.didCollideWithTiles([Direction.Right, Direction.Left])){
-                this.position.x = this.lastValidPosition.x;
-            }
-            else{
-                this.lastValidPosition.x = this.position.x;
-            }
-        }
-        if(this.velocity.y != 0){
-            if(this.didCollideWithTiles([Direction.Up, Direction.Down])){
-                this.position.y = this.lastValidPosition.y;
-            }
-            else{
-                this.lastValidPosition.y = this.position.y;
-            }
-        }
-    }
-
     applyFriction(){
-        let frictionCoefficient = 0.85;
+        let frictionCoefficient = 0.8;
 
         this.velocity.x = Math.trunc(this.velocity.x * frictionCoefficient);
         this.velocity.y = Math.trunc(this.velocity.y * frictionCoefficient);
