@@ -5,15 +5,12 @@ export default class PlayState extends State {
     constructor(mapDefinition) {
         super();
 
+        this.mapDefinition = mapDefinition;
         this.map = new Map(mapDefinition);
     }
 
-    enter(parameters){
-
-    }
-
-    exit(){
-
+    enter(){
+        this.map = new Map(this.mapDefinition);
     }
 
     update(dt){
@@ -21,15 +18,6 @@ export default class PlayState extends State {
     }
 
     render(){
-        // Probably render HUD here instead of updating HUD in update func
-        /*
-        context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-        // Set font configuration.
-        context.font = '24px Arial';
-        context.fillStyle = 'white';
-        context.textAlign = 'center';
-        */
         this.map.render();
     }
 }

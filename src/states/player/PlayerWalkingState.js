@@ -1,9 +1,10 @@
-import { keys } from "../../../globals.js";
+import { keys, sounds } from "../../../globals.js";
 import Direction from "../../enums/Directions.js";
 import PlayerStateName from "../../enums/PlayerStateNames.js";
 import State from "../../../lib/State.js";
 import Animation from "../../../lib/Animation.js";
 import Player from "../../Entities/Player.js";
+import SoundName from "../../enums/SoundName.js";
 
 export default class PlayerWalkingState extends State{
     constructor(player){
@@ -14,21 +15,22 @@ export default class PlayerWalkingState extends State{
     }
 
     enter() {
+        sounds.play(SoundName.Grass_walk);
         this.player.currentAnimation = this.animation;
     }
 
     update(dt){
         if(keys.a){
-            this.player.moveBackward();
+            this.player.move(Direction.Left);
         }
         if(keys.d){
-            this.player.moveForward();
+            this.player.move(Direction.Right);
         }
         if(keys.w){
-            this.player.moveUpward();
+            this.player.move(Direction.Up);
         }
         if(keys.s){
-            this.player.moveDownward();
+            this.player.move(Direction.Down);
         }
         
         this.player.velocityAfterCollision(dt);
@@ -37,5 +39,9 @@ export default class PlayerWalkingState extends State{
         if(this.player.velocity.x == 0 && this.player.velocity.y == 0){
             this.player.changeState(PlayerStateName.Idle);
         }
+    }
+
+    exit(){
+        sounds.stop(SoundName.Grass_walk);
     }
 }

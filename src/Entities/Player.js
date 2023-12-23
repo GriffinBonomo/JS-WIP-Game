@@ -18,35 +18,41 @@ import PlayerStateName from "../enums/PlayerStateNames.js";
 import PlayerIdleState from "../states/player/PlayerIdleState.js";
 import PlayerWalkingState from "../states/player/PlayerWalkingState.js";
 import ImageName from "../enums/ImageName.js";
+import HealthBar from "../ui/HealthBar.js";
+import RangedWeapon from "../objects/RangedWeapon.js";
 
 export default class Player extends Entity{
     constructor(position, dimensions, map){
-        super(position, dimensions, map);
+        super(position, dimensions, new Vector(0,0), map, 
+        {
+            damageCooldownLength: 0.5
+        });
 
         this.map = map;
 
-        // Acceleration 
+        // Stats 
         this.ddx = 0;
         this.ddy = 0;
 
-        // Limits
         this.groundAcceleration = 150;
         this.maxSpeed = 200;
 
-        // Abilities
-        this.projectiles = [];
+        // Items
+        this.weapon = new RangedWeapon(this);
 
         // Sprites
-        // Change this to static later maybe
         this.currentAnimation = new Animation([0,1,2,1], 0.3);
         this.TOTAL_SPRITES = 4;
         this.sprites = this.generateSprites();
 
+        // States
         this.stateMachine = new StateMachine();
         this.stateMachine.add(PlayerStateName.Idle, new PlayerIdleState(this));
         this.stateMachine.add(PlayerStateName.Walking, new PlayerWalkingState(this));
-
         this.stateMachine.change(PlayerStateName.Idle);
+
+        // UI
+        this.healthBar = new HealthBar(this, HealthBar.PLAYER_BAR_DIMENSIONS);
     }
 
     generateSprites() {
@@ -64,34 +70,19 @@ export default class Player extends Entity{
         return sprites;
     }
 
-    moveForward(){
-        this.velocity.x = Math.min(this.maxSpeed, this.velocity.x+this.groundAcceleration);
-    }
-    moveBackward(){
-        this.velocity.x = Math.max(-this.maxSpeed, this.velocity.x-this.groundAcceleration);
-    }
-    moveUpward(){
-        this.velocity.y = Math.max(-this.maxSpeed, this.velocity.y-this.groundAcceleration);
-    }
-    moveDownward(){
-        this.velocity.y = Math.min(this.maxSpeed, this.velocity.y+this.groundAcceleration);
-    }
-
-    shootProjectile(shootDirection){
-        let speed = 300; // Change this later
-
-        switch(shootDirection){
-            case Direction.Left:
-                this.projectiles.push(new Projectile(new Vector(this.position.x, this.position.y), new Vector(-speed, 0)));
-                break;
-            case Direction.Right:
-                this.projectiles.push(new Projectile(new Vector(this.position.x, this.position.y), new Vector(speed, 0)));
-                break;
+    move(direction){
+        switch(direction){
             case Direction.Up:
-                this.projectiles.push(new Projectile(new Vector(this.position.x, this.position.y), new Vector(0, -speed)));
+                this.velocity.y = Math.max(-this.maxSpeed, this.velocity.y-this.groundAcceleration);
                 break;
             case Direction.Down:
-                this.projectiles.push(new Projectile(new Vector(this.position.x, this.position.y), new Vector(0, speed)));
+                this.velocity.y = Math.min(this.maxSpeed, this.velocity.y+this.groundAcceleration);
+                break;
+            case Direction.Left:
+                this.velocity.x = Math.max(-this.maxSpeed, this.velocity.x-this.groundAcceleration);
+                break;
+            case Direction.Right:
+                this.velocity.x = Math.min(this.maxSpeed, this.velocity.x+this.groundAcceleration);
                 break;
         }
     }
@@ -104,35 +95,28 @@ export default class Player extends Entity{
     }
 
     update(dt){
-        // SHOOTING
+        // Attacking
         if(keys.ArrowUp){
-            keys.ArrowUp = false;
-            this.shootProjectile(Direction.Up);
+            this.weapon.shoot(Direction.Up)
         }
         if(keys.ArrowDown){
-            keys.ArrowDown = false;
-            this.shootProjectile(Direction.Down);
+            this.weapon.shoot(Direction.Down);
         }
         if(keys.ArrowLeft){
-            keys.ArrowLeft = false;
-            this.shootProjectile(Direction.Left);
+            this.weapon.shoot(Direction.Left);
         }
         if(keys.ArrowRight){
-            keys.ArrowRight = false;
-            this.shootProjectile(Direction.Right);
+            this.weapon.shoot(Direction.Right);
         }
 
-        this.projectiles.forEach(projectile => {
-            projectile.update(dt);
-        });
+        this.healthBar.update(dt);
+        this.weapon.update(dt);
 
         super.update(dt);    
     }
 
     render(){
-        this.projectiles.forEach(projectile => {
-            projectile.render();
-        });
+        this.healthBar.render();
 
         super.render();
     }

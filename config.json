@@ -1,12 +1,6 @@
 {
     "images": [
         {
-            "name": "gradientBackgroundColourful",
-            "path": "./assets/images/gradientBackgroundColourful.jpg",
-            "width": 1280,
-            "height": 720
-        },
-        {
             "name": "player",
             "path": "./assets/images/characterIdle.png",
             "width": 256,
@@ -23,12 +17,33 @@
             "path": "./assets/images/tileSprites.png",
             "width": 128,
             "height": 128
+        },
+        {
+            "name": "titleScreen",
+            "path": "./assets/images/titleScreen.png",
+            "width": 928,
+            "height": 480
         }
     ],
     "fonts": [
         {
             "name": "Joystix",
             "path": "./assets/fonts/Joystix.ttf"
+        }
+    ],
+    "sounds": [
+        {
+            "name": "grass_walk",
+            "path": "./assets/sounds/grass-walk.wav",
+            "size": 1,
+            "volume": 0.1,
+            "loop": true
+        },
+        {
+            "name": "weapon_shoot",
+            "path": "./assets/sounds/weapon-shoot.wav",
+            "size": 1,
+            "volume": 0.1
         }
     ]
 }

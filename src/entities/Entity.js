@@ -15,17 +15,22 @@ import Direction from "../enums/Directions.js";
 import Tile from "../services/Tile.js";
 
 export default class Entity {
-    constructor(position, dimensions, map) {
+    constructor(position, dimensions, velocity, map, options = {}) {
         this.position = position;
         this.lastValidPosition = new Vector(position.x, position.y);
 
-        this.velocity = new Vector(0,0);
-
+        this.velocity = velocity;
         this.dimensions = dimensions;
+
+        this.currentHealth = options.maxHealth ?? 100;
+        this.maxHealth = options.maxHealth ?? 100;
+        this.damageCooldownLength = options.damageCooldownLength ?? 0.100;
+
+        this.damageCooldownRemaining = 0;
+        this.isDead = false;
+
         this.map = map;
-
         this.sprites = [];
-
         this.stateMachine = null;
     }
 
@@ -34,13 +39,18 @@ export default class Entity {
     }
 
     update(dt){
+        this.damageCooldownRemaining = Math.max(0, this.damageCooldownRemaining - dt);
+
+        if(this.currentHealth <= 0)
+            this.isDead = true;
+
         this.stateMachine.update(dt);
         this.position.add(this.velocity, dt);
         this.currentAnimation.update(dt);
     }
 
     render(){
-        if(this.velocity.x >= 0){
+        if(this.velocity.x <= 0){
             this.sprites[this.currentAnimation.getCurrentFrame()].render(Math.floor(this.position.x), Math.floor(this.position.y));
         }
         else{
@@ -52,7 +62,16 @@ export default class Entity {
         }
     }
 
-    // Currently checks all tiles, this should eventually take a direction to save on wasted resources
+
+    takeDamage(amount){
+        if(this.damageCooldownRemaining > 0)
+            return;
+
+        this.currentHealth = Math.max(0, this.currentHealth - amount);
+        this.damageCooldownRemaining = this.damageCooldownLength;
+    }
+
+
     getCollisionTiles(){
         let tiles = [];
 
