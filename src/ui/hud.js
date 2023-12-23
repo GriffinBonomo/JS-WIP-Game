@@ -1,7 +1,7 @@
 import {
     context,
-} from "../globals.js";
-import Tile from "./services/Tile.js";
+} from "../../globals.js";
+import Tile from "../services/Tile.js";
 
 export default class HUD {
     constructor(player, enableDebug = 0){

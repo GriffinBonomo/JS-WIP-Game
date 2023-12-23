@@ -13,7 +13,7 @@ import {
 	images,
 	stateMachine,
 } from "../../globals.js"
-import HUD from "../hud.js";
+import HUD from "../ui/hud.js";
 import GameStateName from "../enums/GameStateName.js";
 
 export default class Map {
