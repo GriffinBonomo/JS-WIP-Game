@@ -1,5 +1,5 @@
 import EnemyType from "../enums/EnemyType.js";
-import Zombie from "../Entities/enemies/Zombie.js";
+import Zombie from "../entities/enemies/Zombie.js";
 
 export default class EnemyFactory {
     static createInstance(type, position, dimensions, map, sprites) {
