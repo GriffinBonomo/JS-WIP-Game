@@ -1,6 +1,5 @@
 const EnemyType = {
-    Seaweed: 'seaweed',
-    PoisonIvy: 'poisonIvy',
+    Zombie: 'zombie'
 };
 
 export default EnemyType;

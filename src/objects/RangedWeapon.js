@@ -1,8 +1,6 @@
-import { sounds } from "../../globals.js";
 import Vector from "../../lib/Vector.js";
 import Projectile from "../Entities/Projectile.js";
 import Direction from "../enums/Directions.js";
-import SoundName from "../enums/SoundName.js";
 
 export default class RangedWeapon {
     constructor(owner, options = {}){
@@ -31,7 +29,6 @@ export default class RangedWeapon {
                     break;
             }
             this.shotDelayRemaining = this.shotDelay;
-            sounds.play(SoundName.Weapon_shoot);
         }
     }
 

@@ -1,17 +1,11 @@
 import {
-    canvas,
-    context,
     images,
     keys,
-    CANVAS_HEIGHT,
-    CANVAS_WIDTH
 } from "../../globals.js"
 import Vector from "../../lib/Vector.js";
-import Projectile from "./Projectile.js";
 import Animation from "../../lib/Animation.js";
 import Sprite from "../../lib/Sprite.js";
 import Direction from "../enums/Directions.js";
-import Tile from "../services/Tile.js";
 import Entity from "./Entity.js";
 import StateMachine from "../../lib/StateMachine.js";
 import PlayerStateName from "../enums/PlayerStateNames.js";

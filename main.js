@@ -12,12 +12,6 @@ import {
 	stateMachine,
 } from "./globals.js";
 import PlayState from "./src/states/PlayState.js";
-import HUD from "./src/hud.js";
-import Player from "./src/Entities/Player.js";
-import Tile from "./src/services/Tile.js";
-import Vector from "./lib/Vector.js";
-import TitleScreenState from "./src/states/TitleScreenState.js";
-import GameOverState from "./src/states/GameOverState.js";
 
 // Set the dimensions of the play area.
 canvas.width = CANVAS_WIDTH;
@@ -50,12 +44,10 @@ canvas.addEventListener('keyup', event => {
 });
 
 stateMachine.add(GameStateName.Play, new PlayState(mapDefinition));
-stateMachine.add(GameStateName.Title, new TitleScreenState());
-stateMachine.add(GameStateName.GameOver, new GameOverState());
 
 const game = new Game(stateMachine, context, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-stateMachine.change(GameStateName.Title);
+stateMachine.change(GameStateName.Play);
 
 game.start();
 

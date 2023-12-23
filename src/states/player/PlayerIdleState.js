@@ -1,9 +1,7 @@
 import { keys } from "../../../globals.js";
-import Direction from "../../enums/Directions.js";
 import PlayerStateName from "../../enums/PlayerStateNames.js";
 import State from "../../../lib/State.js";
 import Animation from "../../../lib/Animation.js";
-import Player from "../../Entities/Player.js";
 
 export default class PlayerIdleState extends State{
     constructor(player){

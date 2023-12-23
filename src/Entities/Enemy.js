@@ -1,23 +1,6 @@
-import {
-    canvas,
-    context,
-    images,
-    keys,
-    CANVAS_HEIGHT,
-    CANVAS_WIDTH
-} from "../../globals.js"
 import Vector from "../../lib/Vector.js";
-import Projectile from "./Projectile.js";
-import Animation from "../../lib/Animation.js";
-import Sprite from "../../lib/Sprite.js";
 import Direction from "../enums/Directions.js";
-import Tile from "../services/Tile.js";
 import Entity from "./Entity.js";
-import StateMachine from "../../lib/StateMachine.js";
-import ImageName from "../enums/ImageName.js";
-import EnemyStateName from "../enums/EnemyStateNames.js";
-import EnemyIdleState from "../states/enemies/EnemyIdleState.js";
-import EnemyChasingState from "../states/enemies/EnemyChasingState.js";
 import HealthBar from "../ui/HealthBar.js";
 
 export default class Enemy extends Entity {
@@ -88,16 +71,5 @@ export default class Enemy extends Entity {
         this.healthBar.render();
 
         super.render();
-    }
-
-    initialiseStateMachine(animations){
-        const stateMachine = new StateMachine();
-
-        stateMachine.add(EnemyStateName.Idle, new EnemyIdleState(this, animations[EnemyStateName.Idle]));
-        stateMachine.add(EnemyStateName.Chasing, new EnemyChasingState(this, animations[EnemyStateName.Chasing]));
-
-        stateMachine.change(EnemyStateName.Idle);
-
-        return stateMachine;
     }
 }

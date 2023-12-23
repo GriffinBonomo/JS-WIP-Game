@@ -1,8 +1,5 @@
 import {
-    canvas,
     context,
-    CANVAS_HEIGHT,
-    CANVAS_WIDTH,
 } from "../globals.js";
 import Tile from "./services/Tile.js";
 

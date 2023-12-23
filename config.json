@@ -17,12 +17,6 @@
             "path": "./assets/images/tileSprites.png",
             "width": 128,
             "height": 128
-        },
-        {
-            "name": "titleScreen",
-            "path": "./assets/images/titleScreen.png",
-            "width": 928,
-            "height": 480
         }
     ],
     "fonts": [
