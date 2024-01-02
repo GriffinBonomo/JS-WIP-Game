@@ -7,6 +7,12 @@
             "height": 256
         },
         {
+            "name": "gunslinger",
+            "path": "./assets/images/gunslinger.png",
+            "width": 256,
+            "height": 128
+        },
+        {
             "name": "enemy",
             "path": "./assets/images/enemy.png",
             "width": 256,

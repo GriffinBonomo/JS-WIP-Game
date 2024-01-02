@@ -35,7 +35,7 @@ export default class Map {
 		this.collisionLayer = new Layer(mapDefinition.layers[Layer.COLLISION], sprites);
 		this.player = new Player(new Vector(200,200), new Vector(Tile.SIZE * 2, Tile.SIZE * 2), this);
 		this.projectiles = [];
-        this.hud = new HUD(this.player, 0);
+        this.hud = new HUD(this.player, 1);
 
 	}
 
