@@ -8,7 +8,7 @@ export default class PlayerIdleState extends State{
         super();
 
         this.player = player;
-        this.animation = new Animation([0,1,2,1], 0.3);
+        this.animation = new Animation([0], 1, 1);
     }
 
     enter() {

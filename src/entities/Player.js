@@ -28,15 +28,15 @@ export default class Player extends Entity{
         this.ddx = 0;
         this.ddy = 0;
 
-        this.groundAcceleration = 150;
-        this.maxSpeed = 200;
+        this.groundAcceleration = 40;
+        this.maxSpeed = 80;
 
         // Items
         this.weapon = new RangedWeapon(this);
 
         // Sprites
-        this.currentAnimation = new Animation([0,1,2,1], 0.3);
-        this.TOTAL_SPRITES = 4;
+        this.currentAnimation;
+        this.TOTAL_SPRITES = 32;
         this.sprites = this.generateSprites();
 
         // States
@@ -54,7 +54,7 @@ export default class Player extends Entity{
 
         for(let i = 0; i < this.TOTAL_SPRITES; i++){
             sprites.push(new Sprite(
-				images.get(ImageName.Player),
+				images.get(ImageName.Gunslinger),
 				i * this.dimensions.x,
 				0,
 				this.dimensions.x,

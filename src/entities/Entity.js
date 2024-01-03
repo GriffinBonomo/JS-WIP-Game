@@ -41,7 +41,7 @@ export default class Entity {
     }
 
     render(){
-        if(this.velocity.x <= 0){
+        if(this.velocity.x >= 0){
             this.sprites[this.currentAnimation.getCurrentFrame()].render(Math.floor(this.position.x), Math.floor(this.position.y));
         }
         else{
