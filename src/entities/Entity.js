@@ -53,7 +53,6 @@ export default class Entity {
         }
     }
 
-
     takeDamage(amount){
         if(this.damageCooldownRemaining > 0)
             return;
@@ -62,13 +61,12 @@ export default class Entity {
         this.damageCooldownRemaining = this.damageCooldownLength;
     }
 
-
     getCollisionTiles(){
         let tiles = [];
-
-        for(let i = 0; i < this.dimensions.y; i += Tile.SIZE){
-            for(let j = 0; j < this.dimensions.x; j += Tile.SIZE){
-                let tile = this.map.collisionLayer.getTile(Math.round((this.position.x + j) / Tile.SIZE), Math.round((this.position.y + i) / Tile.SIZE));
+        
+        for(let i = 0; i <= this.dimensions.y; i += Tile.SIZE){
+            for(let j = 0; j <= this.dimensions.x; j += Tile.SIZE){
+                let tile = this.map.collisionLayer.getTile(Math.trunc((this.position.x + j) / Tile.SIZE), Math.trunc((this.position.y + i) / Tile.SIZE));
                 if(tile){
                     tiles.push(tile);
                 }

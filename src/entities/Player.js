@@ -106,7 +106,7 @@ export default class Player extends Entity{
         this.healthBar.update(dt);
         this.weapon.update(dt);
 
-        super.update(dt);    
+        super.update(dt);
     }
 
     render(){

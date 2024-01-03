@@ -1,7 +1,7 @@
 import Colour from "../enums/Colour.js";
 import Sprite from "../../lib/Sprite.js";
 import Vector from "../../lib/Vector.js";
-import Player from "../Entities/Player.js";
+import Player from "../entities/Player.js";
 import ImageName from "../enums/ImageName.js";
 import Tile from "./Tile.js";
 import Layer from "./Layer.js";
@@ -33,7 +33,7 @@ export default class Map {
 		this.bottomLayer = new Layer(mapDefinition.layers[Layer.BOTTOM], sprites);
 		this.decorationsLayer = new Layer(mapDefinition.layers[Layer.DECORATIONS], sprites);
 		this.collisionLayer = new Layer(mapDefinition.layers[Layer.COLLISION], sprites);
-		this.player = new Player(new Vector(200,200), new Vector(Tile.SIZE * 2, Tile.SIZE * 2), this);
+		this.player = new Player(new Vector(100,80), new Vector(Tile.SIZE * 2, Tile.SIZE * 2), this);
 		this.projectiles = [];
         this.hud = new HUD(this.player, 1);
 
