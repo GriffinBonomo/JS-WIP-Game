@@ -1,7 +1,7 @@
 import Vector from "../../lib/Vector.js";
 import Direction from "../enums/Directions.js";
-import Entity from "./Entity.js";
 import HealthBar from "../ui/HealthBar.js";
+import Entity from ".Entity.js";
 
 export default class Enemy extends Entity {
     constructor(position, dimensions, map, sprites){
