@@ -3,7 +3,7 @@ import {
 } from "../../globals.js";
 import Vector from "../../lib/Vector.js";
 import Tile from "../services/Tile.js";
-import Entity from "./Entity.js";
+import Entity from "../entities/Entity.js"
 
 export default class Projectile extends Entity{
     static DEFAULT_DIMENSIONS = new Vector(Tile.SIZE, Tile.SIZE);
@@ -20,7 +20,7 @@ export default class Projectile extends Entity{
 
     update(dt){
         this.position.add(this.velocity, dt);
-        if(this.getCollisionTiles().length > 0){
+        if(this.isTileColliding()){
             this.isDead = true;
         }
     }

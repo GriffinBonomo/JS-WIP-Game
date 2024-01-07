@@ -1,7 +1,7 @@
 import {
     context,
 } from "../../globals.js"
-
+import Hitbox from "../../lib/Hitbox.js";
 import Vector from "../../lib/Vector.js";
 import Tile from "../services/Tile.js";
 
@@ -12,7 +12,14 @@ export default class Entity {
 
         this.velocity = velocity;
         this.dimensions = dimensions;
-
+        
+        this.hitboxOffsets = options.hitboxOffsets ?? new Hitbox();
+        this.hitbox = new Hitbox(
+            this.position.x + this.hitboxOffsets.position.x,
+            this.position.y + this.hitboxOffsets.position.y,
+            this.dimensions.x + this.hitboxOffsets.dimensions.x,
+            this.dimensions.y + this.hitboxOffsets.dimensions.y,
+        );
         this.currentHealth = options.maxHealth ?? 100;
         this.maxHealth = options.maxHealth ?? 100;
         this.damageCooldownLength = options.damageCooldownLength ?? 0.100;
@@ -37,6 +44,14 @@ export default class Entity {
 
         this.stateMachine.update(dt);
         this.position.add(this.velocity, dt);
+
+        this.hitbox.set(
+            this.position.x + this.hitboxOffsets.position.x,
+			this.position.y + this.hitboxOffsets.position.y,
+			this.dimensions.x + this.hitboxOffsets.dimensions.x,
+			this.dimensions.y + this.hitboxOffsets.dimensions.y,
+        );
+
         this.currentAnimation.update(dt);
     }
 
@@ -51,6 +66,8 @@ export default class Entity {
 			this.sprites[this.currentAnimation.getCurrentFrame()].render(0, 0);
 			context.restore();
         }
+
+        this.hitbox.render(context);
     }
 
     takeDamage(amount){
@@ -61,37 +78,52 @@ export default class Entity {
         this.damageCooldownRemaining = this.damageCooldownLength;
     }
 
-    getCollisionTiles(){
-        let tiles = [];
-        
-        for(let i = 0; i <= this.dimensions.y; i += Tile.SIZE){
-            for(let j = 0; j <= this.dimensions.x; j += Tile.SIZE){
-                let tile = this.map.collisionLayer.getTile(Math.trunc((this.position.x + j) / Tile.SIZE), Math.trunc((this.position.y + i) / Tile.SIZE));
-                if(tile){
-                    tiles.push(tile);
-                }
-            }
+    isTileColliding(){     
+        // top
+        for(let i = 0; i < this.hitbox.dimensions.x; i += Tile.SIZE){
+            if(this.map.collisionLayer.getTile(Math.trunc((this.hitbox.position.x + i) / Tile.SIZE), Math.trunc((this.hitbox.position.y) / Tile.SIZE)))
+                return true;
         }
-        return tiles;
+        // bottom
+        for(let i = 0; i < this.hitbox.dimensions.x; i += Tile.SIZE){
+            if(this.map.collisionLayer.getTile(Math.trunc((this.hitbox.position.x + i) / Tile.SIZE), Math.trunc((this.hitbox.position.y + this.hitbox.dimensions.y) / Tile.SIZE)))
+                return true; 
+        }
+        // bottom right
+        if(this.map.collisionLayer.getTile(Math.trunc((this.hitbox.position.x + this.hitbox.dimensions.x) / Tile.SIZE), Math.trunc((this.hitbox.position.y + this.hitbox.dimensions.y) / Tile.SIZE)))
+            return true;
+
+        // left 
+        for(let i = 0; i < this.hitbox.dimensions.y; i += Tile.SIZE){
+            if(this.map.collisionLayer.getTile(Math.trunc((this.hitbox.position.x) / Tile.SIZE), Math.trunc((this.hitbox.position.y + i) / Tile.SIZE)))
+                return true; 
+        }
+        // right
+        for(let i = 0; i < this.hitbox.dimensions.y; i += Tile.SIZE){
+            if(this.map.collisionLayer.getTile(Math.trunc((this.hitbox.position.x + this.hitbox.dimensions.x) / Tile.SIZE), Math.trunc((this.hitbox.position.y + i) / Tile.SIZE)))
+                return true; 
+        }
+
+        return false;
     }
 
     velocityAfterCollision(dt){
-        const oldPosition = new Vector(this.position.x, this.position.y);
+        const oldHitboxPosition = new Vector(this.hitbox.position.x, this.hitbox.position.y);
 
         // Handling horizontal collision
-        this.position.add(new Vector(this.velocity.x, 0), dt);
+        this.hitbox.position.add(new Vector(this.velocity.x, 0), dt);
 
-        if(this.getCollisionTiles().length > 0){
+        if(this.isTileColliding()){
             this.velocity.x = 0;
+            this.hitbox.position.x = oldHitboxPosition.x;
         }
-        this.position.x = oldPosition.x;
 
         // Handle vertical collision
-        this.position.add(new Vector(0, this.velocity.y), dt);
+        this.hitbox.position.add(new Vector(0, this.velocity.y), dt);
 
-        if(this.getCollisionTiles().length > 0){
+        if(this.isTileColliding()){
             this.velocity.y = 0;
+            this.hitbox.position.y = oldHitboxPosition.y;
         }
-        this.position.y = oldPosition.y;
     }
 }

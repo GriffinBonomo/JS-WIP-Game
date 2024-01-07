@@ -3,7 +3,6 @@ import {
     keys,
 } from "../../globals.js"
 import Vector from "../../lib/Vector.js";
-import Animation from "../../lib/Animation.js";
 import Sprite from "../../lib/Sprite.js";
 import Direction from "../enums/Directions.js";
 import Entity from "./Entity.js";
@@ -14,12 +13,19 @@ import PlayerWalkingState from "../states/player/PlayerWalkingState.js";
 import ImageName from "../enums/ImageName.js";
 import HealthBar from "../ui/HealthBar.js";
 import RangedWeapon from "../objects/RangedWeapon.js";
+import Hitbox from "../../lib/Hitbox.js";
 
 export default class Player extends Entity{
+    static SPRITE_WIDTH = 32;
+    static SPRITE_HEIGHT = 32;
+
     constructor(position, dimensions, map){
         super(position, dimensions, new Vector(0,0), map, 
         {
-            damageCooldownLength: 0.5
+            damageCooldownLength: 0.5,
+            hitboxOffsets: new Hitbox(12, 3, -24, -4)
+            //hitboxOffsets: new Hitbox(0, 0, 5, 15)
+
         });
 
         this.map = map;
@@ -55,10 +61,10 @@ export default class Player extends Entity{
         for(let i = 0; i < this.TOTAL_SPRITES; i++){
             sprites.push(new Sprite(
 				images.get(ImageName.Gunslinger),
-				i * this.dimensions.x,
+				i * Player.SPRITE_WIDTH,
 				0,
-				this.dimensions.x,
-				this.dimensions.y,
+				Player.SPRITE_WIDTH,
+				Player.SPRITE_HEIGHT,
 			));
         }
         return sprites;
