@@ -16,6 +16,11 @@ export default class PlayerIdleState extends State{
     }
 
     update(dt){
+        this.player.velocityAfterCollision();
+        if(!this.player.isStandingOnGround()){
+            this.player.changeState(PlayerStateName.Falling);
+        }
+
         if(keys.a){
             this.player.changeState(PlayerStateName.Walking);
         }

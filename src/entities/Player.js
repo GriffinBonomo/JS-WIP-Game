@@ -14,10 +14,13 @@ import ImageName from "../enums/ImageName.js";
 import HealthBar from "../ui/HealthBar.js";
 import RangedWeapon from "../objects/RangedWeapon.js";
 import Hitbox from "../../lib/Hitbox.js";
+import PlayerFallingState from "../states/player/PlayerFallingState.js";
 
 export default class Player extends Entity{
     static SPRITE_WIDTH = 32;
     static SPRITE_HEIGHT = 32;
+
+    static MAX_FALLING_SPEED = 150;
 
     constructor(position, dimensions, map){
         super(position, dimensions, new Vector(0,0), map, 
@@ -49,6 +52,7 @@ export default class Player extends Entity{
         this.stateMachine = new StateMachine();
         this.stateMachine.add(PlayerStateName.Idle, new PlayerIdleState(this));
         this.stateMachine.add(PlayerStateName.Walking, new PlayerWalkingState(this));
+        this.stateMachine.add(PlayerStateName.Falling, new PlayerFallingState(this));
         this.stateMachine.change(PlayerStateName.Idle);
 
         // UI

@@ -107,6 +107,16 @@ export default class Entity {
         return false;
     }
 
+    isStandingOnGround(){
+        for(let i = 0; i < this.hitbox.dimensions.x; i += Tile.SIZE){
+            if(this.map.collisionLayer.getTile(Math.trunc((this.hitbox.position.x + i) / Tile.SIZE), Math.trunc((this.hitbox.position.y + this.hitbox.dimensions.y + 1) / Tile.SIZE)))
+                return true;
+        }
+        if(this.map.collisionLayer.getTile(Math.trunc((this.hitbox.position.x + this.hitbox.dimensions.x) / Tile.SIZE), Math.trunc((this.hitbox.position.y + this.hitbox.dimensions.y + 1) / Tile.SIZE)))
+            return true;
+        return false;
+    }
+
     velocityAfterCollision(dt){
         const oldHitboxPosition = new Vector(this.hitbox.position.x, this.hitbox.position.y);
 
