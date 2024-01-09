@@ -6,11 +6,11 @@ import Panel from "./Panel.js";
 import Tile from "../services/Tile.js";
 
 export default class HealthBar extends Panel {
-    static PLAYER_BAR_DIMENSIONS = new Vector(Tile.SIZE * 4.5, Tile.SIZE * 0.8);
-    static ENEMY_BAR_DIMENSIONS = new Vector(Tile.SIZE * 3.5, Tile.SIZE * 0.6);
+    static PLAYER_BAR_DIMENSIONS = new Vector(Tile.SIZE * 4, Tile.SIZE * 0.8);
+    static ENEMY_BAR_DIMENSIONS = new Vector(Tile.SIZE * 4, Tile.SIZE * 0.8);
 
     constructor(entity, dimensions = HealthBar.ENEMY_BAR_DIMENSIONS){
-        super(new Vector(entity.position.x, entity.position.y), dimensions, { borderColour: Colour.Black, width: 5});
+        super(new Vector(entity.position.x, entity.position.y), dimensions, { borderColour: Colour.Black, width: 3});
   
         this.entity = entity;
         this.positionOffset = this.getBarOffset(entity);
@@ -19,7 +19,7 @@ export default class HealthBar extends Panel {
 
     getBarOffset(entity){
         let xOffset = -(this.dimensions.x - entity.dimensions.x)/2;
-        let yOffset = -(this.dimensions.y + 10);
+        let yOffset = -(this.dimensions.y + 5);
         return new Vector(xOffset, yOffset)
     }
 
