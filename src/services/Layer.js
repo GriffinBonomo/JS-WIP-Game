@@ -2,8 +2,8 @@ import Tile from "./Tile.js";
 
 export default class Layer {
 	static BOTTOM = 0;
-	static DECORATIONS = 1
-	static COLLISION = 2;
+	static COLLISION = 1;
+	static DECORATIONS = 2
 	static TOP = 3;
 
 	/**

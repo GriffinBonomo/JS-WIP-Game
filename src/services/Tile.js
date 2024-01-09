@@ -1,5 +1,5 @@
 export default class Tile {
-	static SIZE = 16;
+	static SIZE = 8;
 
 	/**
 	 * Represents one tile in a Layer and on the screen.
