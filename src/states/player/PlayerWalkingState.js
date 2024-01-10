@@ -17,6 +17,10 @@ export default class PlayerWalkingState extends State{
     }
 
     update(dt){
+        if(!this.player.isStandingOnGround()){
+            this.player.changeState(PlayerStateName.Falling);
+        }
+
         if(keys.a){
             this.player.move(Direction.Left);
         }
@@ -24,10 +28,7 @@ export default class PlayerWalkingState extends State{
             this.player.move(Direction.Right);
         }
         if(keys.w){
-            this.player.move(Direction.Up);
-        }
-        if(keys.s){
-            this.player.move(Direction.Down);
+            this.player.changeState(PlayerStateName.Jumping);
         }
         
         this.player.velocityAfterCollision(dt);

@@ -28,10 +28,7 @@ export default class PlayerIdleState extends State{
             this.player.changeState(PlayerStateName.Walking);
         }
         if(keys.w){
-            this.player.changeState(PlayerStateName.Walking);
-        }
-        if(keys.s){
-            this.player.changeState(PlayerStateName.Walking);
+            this.player.changeState(PlayerStateName.Jumping);
         }
     }
 }
