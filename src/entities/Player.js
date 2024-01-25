@@ -80,16 +80,16 @@ export default class Player extends Entity{
     move(direction){
         switch(direction){
             case Direction.Up:
-                this.velocity.y = Math.max(-this.maxSpeed, this.velocity.y-this.groundAcceleration);
+                this.velocity.y = Math.max(-this.maxSpeed, (this.velocity.y-this.groundAcceleration) * this.movementModifier);
                 break;
             case Direction.Down:
-                this.velocity.y = Math.min(this.maxSpeed, this.velocity.y+this.groundAcceleration);
+                this.velocity.y = Math.min(this.maxSpeed, (this.velocity.y+this.groundAcceleration) * this.movementModifier);
                 break;
             case Direction.Left:
-                this.velocity.x = Math.max(-this.maxSpeed, this.velocity.x-this.groundAcceleration);
+                this.velocity.x = Math.max(-this.maxSpeed, (this.velocity.x-this.groundAcceleration) * this.movementModifier);
                 break;
             case Direction.Right:
-                this.velocity.x = Math.min(this.maxSpeed, this.velocity.x+this.groundAcceleration);
+                this.velocity.x = Math.min(this.maxSpeed, (this.velocity.x+this.groundAcceleration) * this.movementModifier);
                 break;
         }
     }

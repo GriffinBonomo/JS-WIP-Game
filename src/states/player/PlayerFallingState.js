@@ -1,10 +1,10 @@
 import PlayerStateName from "../../enums/PlayerStateNames.js";
 import State from "../../../lib/State.js";
 import Animation from "../../../lib/Animation.js";
+import { keys } from "../../../globals.js"
+import Direction from "../../enums/Directions.js";
 
 export default class PlayerFallingState extends State{
-    static GRAVITY = 300;
-
     constructor(player){
         super();
 
@@ -21,6 +21,14 @@ export default class PlayerFallingState extends State{
             this.player.changeState(PlayerStateName.Walking);
         }
         this.player.applyGravity(dt);
+
+        if(keys.a){
+            this.player.move(Direction.Left);
+        }
+        if(keys.d){
+            this.player.move(Direction.Right);
+        }
+
         this.player.velocityAfterCollision(dt);
     }
 }

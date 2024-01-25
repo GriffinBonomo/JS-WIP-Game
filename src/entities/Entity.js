@@ -12,6 +12,8 @@ export default class Entity {
 
         this.velocity = velocity;
         this.dimensions = dimensions;
+
+        this.movementModifier = 1;
         
         this.hitboxOffsets = options.hitboxOffsets ?? new Hitbox();
         this.hitbox = new Hitbox(

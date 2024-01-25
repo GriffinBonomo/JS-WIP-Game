@@ -27,7 +27,7 @@ export default class PlayerIdleState extends State{
         if(keys.d){
             this.player.changeState(PlayerStateName.Walking);
         }
-        if(keys.w){
+        if(keys[" "]){
             this.player.changeState(PlayerStateName.Jumping);
         }
     }

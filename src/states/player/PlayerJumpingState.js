@@ -2,6 +2,8 @@ import PlayerStateName from "../../enums/PlayerStateNames.js";
 import State from "../../../lib/State.js";
 import Animation from "../../../lib/Animation.js";
 import Vector from "../../../lib/Vector.js";
+import { keys } from "../../../globals.js";
+import Direction from "../../enums/Directions.js";
 
 export default class PlayerJumpingState extends State{
     static JUMPFORCE = -175;
@@ -20,11 +22,18 @@ export default class PlayerJumpingState extends State{
     }
 
     update(dt){
-        console.log(this.player.velocity.y);
         if(this.player.velocity.y > 0){
             this.player.changeState(PlayerStateName.Falling);
         }
         this.player.applyGravity(dt);
+
+        if(keys.a){
+            this.player.move(Direction.Left);
+        }
+        if(keys.d){
+            this.player.move(Direction.Right);
+        }
+
         this.player.velocityAfterCollision(dt);
     }
 }

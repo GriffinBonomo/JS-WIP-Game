@@ -27,7 +27,7 @@ export default class PlayerWalkingState extends State{
         if(keys.d){
             this.player.move(Direction.Right);
         }
-        if(keys.w){
+        if(keys[" "]){
             this.player.changeState(PlayerStateName.Jumping);
         }
         
