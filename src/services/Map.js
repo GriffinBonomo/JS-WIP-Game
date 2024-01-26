@@ -15,6 +15,7 @@ import {
 } from "../../globals.js"
 import HUD from "../ui/hud.js";
 import GameStateName from "../enums/GameStateName.js";
+import Crosshair from "../ui/Crosshair.js";
 
 export default class Map {
 	/**
@@ -34,7 +35,10 @@ export default class Map {
 		this.collisionLayer = new Layer(mapDefinition.layers[Layer.COLLISION], sprites);
 		this.player = new Player(new Vector(200,80), new Vector(Player.SPRITE_WIDTH, Player.SPRITE_HEIGHT), this);
 		this.projectiles = [];
+
+		// Move this out of the map
         this.hud = new HUD(this.player, 1);
+		this.crosshair = new Crosshair();
 
 	}
 
@@ -67,6 +71,7 @@ export default class Map {
 		this.player.render();
 
         this.hud.render();
+		this.crosshair.render();
 
 		if (DEBUG) {
 			Map.renderGrid();

@@ -10,6 +10,7 @@ import {
 	CANVAS_HEIGHT,
 	CANVAS_WIDTH,
 	stateMachine,
+	mouse,
 } from "./globals.js";
 import PlayState from "./src/states/PlayState.js";
 
@@ -32,7 +33,7 @@ const mapDefinition = await fetch(`src/maps/level0.json`).then((response) => res
 // Load Assets
 images.load(imageDefinitions);
 fonts.load(fontDefinitions);
-sounds.load(soundDefinitions)
+sounds.load(soundDefinitions);
 
 // Listening for user input
 canvas.addEventListener('keydown', event => {
@@ -42,6 +43,8 @@ canvas.addEventListener('keydown', event => {
 canvas.addEventListener('keyup', event => {
 	keys[event.key] = false;
 });
+
+mouse.updateOffset();
 
 stateMachine.add(GameStateName.Play, new PlayState(mapDefinition));
 

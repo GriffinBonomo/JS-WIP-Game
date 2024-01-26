@@ -1,3 +1,4 @@
+import Mouse from "./lib/Mouse.js";
 import Images from "./lib/Images.js";
 import Fonts from "./lib/Fonts.js";
 import StateMachine from "./lib/StateMachine.js";
@@ -11,6 +12,7 @@ export const CANVAS_WIDTH = 640;
 export const CANVAS_HEIGHT = 360;
 
 export const keys = {};
+export const mouse = new Mouse(canvas);
 export const images = new Images(context);
 export const fonts = new Fonts();
 export const sounds = new Sounds();
