@@ -1,6 +1,6 @@
 const ImageName = {
     Tiles: 'tiles',
-    Player: 'player',
+    Crosshair: 'crosshair',
     Gunslinger: 'gunslinger',
     Enemy: 'enemy',
 };

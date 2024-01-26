@@ -58,6 +58,7 @@ export default class Map {
 		}
 
         this.hud.update(dt);
+		this.crosshair.update(dt);
 	}
 
 	render() {

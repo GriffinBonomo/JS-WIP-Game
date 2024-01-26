@@ -1,12 +1,6 @@
 {
     "images": [
         {
-            "name": "player",
-            "path": "./assets/images/characterIdle.png",
-            "width": 256,
-            "height": 256
-        },
-        {
             "name": "gunslinger",
             "path": "./assets/images/gunslinger.png",
             "width": 256,
@@ -17,6 +11,12 @@
             "path": "./assets/images/enemy.png",
             "width": 256,
             "height": 256
+        },
+        {
+            "name": "crosshair",
+            "path": "./assets/images/crosshair.png",
+            "width": 10,
+            "height": 10
         },
         {
             "name": "tiles",
