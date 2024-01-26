@@ -1,13 +1,12 @@
 import Vector from "../../lib/Vector.js";
 import Projectile from "../Entities/Projectile.js";
-import Direction from "../enums/Directions.js";
 
 export default class RangedWeapon {
     constructor(owner, options = {}){
         this.owner = owner;
 
         this.shotDelay = 1 / (options.fireRate ?? 5);
-        this.shotSpeed = options.shotSpeed ?? 300;
+        this.shotSpeed = options.shotSpeed ?? 500;
 
         this.shotDelayRemaining = 0;
     }

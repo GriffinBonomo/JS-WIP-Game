@@ -13,7 +13,7 @@ import PlayerIdleState from "../states/player/PlayerIdleState.js";
 import PlayerWalkingState from "../states/player/PlayerWalkingState.js";
 import ImageName from "../enums/ImageName.js";
 import HealthBar from "../ui/HealthBar.js";
-import RangedWeapon from "../objects/RangedWeapon.js";
+import RangedWeapon from "../items/RangedWeapon.js";
 import Hitbox from "../../lib/Hitbox.js";
 import PlayerFallingState from "../states/player/PlayerFallingState.js";
 import PlayerJumpingState from "../states/player/PlayerJumpingState.js";

@@ -29,7 +29,7 @@ const {
 	fonts: fontDefinitions,
 	sounds: soundDefinitions
 } = await fetch('./config.json').then((response) => response.json());
-const mapDefinition = await fetch(`src/maps/level0.json`).then((response) => response.json());
+const mapDefinition = await fetch(`assets/levels/level0.json`).then((response) => response.json());
 
 // Load Assets
 images.load(imageDefinitions);
