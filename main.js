@@ -18,6 +18,7 @@ import PlayState from "./src/states/PlayState.js";
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 canvas.setAttribute('tabindex', '1');
+canvas.setAttribute('oncontextmenu', 'return false');
 
 // Now that the canvas element has been prepared, we can add it to the DOM.
 document.body.appendChild(canvas);
@@ -44,7 +45,7 @@ canvas.addEventListener('keyup', event => {
 	keys[event.key] = false;
 });
 
-mouse.updateOffset();
+mouse.enable();
 
 stateMachine.add(GameStateName.Play, new PlayState(mapDefinition));
 

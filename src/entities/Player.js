@@ -1,6 +1,7 @@
 import {
     images,
     keys,
+    mouse,
 } from "../../globals.js"
 import Vector from "../../lib/Vector.js";
 import Sprite from "../../lib/Sprite.js";
@@ -111,19 +112,9 @@ export default class Player extends Entity{
 
     update(dt){
         // Attacking
-        if(keys.ArrowUp){
-            this.weapon.shoot(Direction.Up)
+        if(mouse.buttons[0]){
+            this.weapon.shoot(mouse.position);
         }
-        if(keys.ArrowDown){
-            this.weapon.shoot(Direction.Down);
-        }
-        if(keys.ArrowLeft){
-            this.weapon.shoot(Direction.Left);
-        }
-        if(keys.ArrowRight){
-            this.weapon.shoot(Direction.Right);
-        }
-
         this.healthBar.update(dt);
         this.weapon.update(dt);
 

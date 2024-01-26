@@ -44,7 +44,11 @@ export default class Entity {
         if(this.currentHealth <= 0)
             this.isDead = true;
 
-        this.stateMachine.update(dt);
+        // This is evil, remove it later!!!
+        if(this.stateMachine){
+            this.stateMachine.update(dt);
+        }
+
         this.position.add(this.velocity, dt);
 
         this.hitbox.set(
@@ -54,7 +58,10 @@ export default class Entity {
 			this.dimensions.y + this.hitboxOffsets.dimensions.y,
         );
 
-        this.currentAnimation.update(dt);
+        // This is also evil, remove it later !!!
+        if(this.currentAnimation){
+            this.currentAnimation.update(dt);
+        }
     }
 
     render(){

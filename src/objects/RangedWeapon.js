@@ -12,22 +12,17 @@ export default class RangedWeapon {
         this.shotDelayRemaining = 0;
     }
 
-    shoot(direction){
+    shoot(target){
         if(this.shotDelayRemaining <= 0){
-            switch(direction){
-                case Direction.Left:
-                    this.owner.map.projectiles.push(new Projectile(new Vector(this.owner.position.x, this.owner.position.y), Projectile.DEFAULT_DIMENSIONS, new Vector(-this.shotSpeed, 0), this));
-                    break;
-                case Direction.Right:
-                    this.owner.map.projectiles.push(new Projectile(new Vector(this.owner.position.x, this.owner.position.y), Projectile.DEFAULT_DIMENSIONS, new Vector(this.shotSpeed, 0), this));
-                    break;
-                case Direction.Up:
-                    this.owner.map.projectiles.push(new Projectile(new Vector(this.owner.position.x, this.owner.position.y), Projectile.DEFAULT_DIMENSIONS, new Vector(0, -this.shotSpeed), this));
-                    break;
-                case Direction.Down:
-                    this.owner.map.projectiles.push(new Projectile(new Vector(this.owner.position.x, this.owner.position.y), Projectile.DEFAULT_DIMENSIONS, new Vector(0, this.shotSpeed), this));
-                    break;
-            }
+            let direction = new Vector(target.x - this.owner.position.x, target.y - this.owner.position.y);
+            direction.normalize();
+            direction.scale(this.shotSpeed);
+
+            this.owner.map.projectiles.push(new Projectile(new Vector(this.owner.position.x, this.owner.position.y),
+            Projectile.DEFAULT_DIMENSIONS,
+            direction,
+            this));
+            
             this.shotDelayRemaining = this.shotDelay;
         }
     }

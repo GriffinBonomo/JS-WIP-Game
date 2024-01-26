@@ -19,7 +19,7 @@ export default class Projectile extends Entity{
     }
 
     update(dt){
-        this.position.add(this.velocity, dt);
+        super.update(dt);
         if(this.isTileColliding()){
             this.isDead = true;
         }
