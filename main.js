@@ -12,7 +12,7 @@ import {
 	stateMachine,
 	mouse,
 } from "./globals.js";
-import PlayState from "./src/states/PlayState.js";
+import PlayState from "./src/states/game/PlayState.js";
 
 // Set the dimensions of the play area.
 canvas.width = CANVAS_WIDTH;
