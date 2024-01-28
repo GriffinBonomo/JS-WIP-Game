@@ -16,6 +16,7 @@ import {
 import HUD from "../ui/hud.js";
 import GameStateName from "../enums/GameStateName.js";
 import Crosshair from "../ui/Crosshair.js";
+import Light from "../objects/Light.js";
 
 export default class Map {
 	/**
@@ -40,6 +41,7 @@ export default class Map {
         this.hud = new HUD(this.player, 1);
 		this.crosshair = new Crosshair();
 
+		this.light = new Light(new Vector(250, 250), this);
 	}
 
 	update(dt) {
@@ -59,6 +61,10 @@ export default class Map {
 
         this.hud.update(dt);
 		this.crosshair.update(dt);
+
+
+		// REMOVE THIS LATER
+		this.light.update(dt);
 	}
 
 	render() {
@@ -73,6 +79,11 @@ export default class Map {
 
         this.hud.render();
 		this.crosshair.render();
+
+
+		// REMOVE THIS LATER
+		this.light.render();
+
 
 		if (DEBUG) {
 			Map.renderGrid();
