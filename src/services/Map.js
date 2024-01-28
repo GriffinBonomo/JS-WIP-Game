@@ -41,7 +41,8 @@ export default class Map {
         this.hud = new HUD(this.player, 1);
 		this.crosshair = new Crosshair();
 
-		this.light = new Light(new Vector(250, 250), this);
+		this.lights = [];
+		this.lights.push(new Light(new Vector(250, 250), this));
 	}
 
 	update(dt) {
@@ -64,14 +65,18 @@ export default class Map {
 
 
 		// REMOVE THIS LATER
-		this.light.update(dt);
+		this.lights.forEach(light => {
+			light.update(dt);
+		})
 	}
 
 	render() {
 		this.bottomLayer.render();
 
 		// REMOVE THIS LATER
-		this.light.render();
+		this.lights.forEach(light => {
+			light.render();
+		});
 		
 		this.collisionLayer.render();
 		this.decorationsLayer.render();
