@@ -44,6 +44,8 @@ export default class Map {
 
 		this.lights = [];
 		this.lights.push(new Light(new Vector(250, 250), this));
+		this.lights.push(new Light(new Vector(510, 150), this));
+		this.lights.push(new Light(new Vector(440, 265), this));
 	}
 
 	update(dt) {

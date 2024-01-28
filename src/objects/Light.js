@@ -7,7 +7,7 @@ export default class Light {
         this.position = position;
         this.map = map;
 
-        this.rayLength = 200;
+        this.rayLength = 300;
 
         this.rays = [];
         this.collisionPoints = [];
@@ -16,9 +16,12 @@ export default class Light {
     }
 
     calculateCollisionPoints(){
+        this.rays = [];
+        this.collisionPoints = [];
+
         const tileVector = new Vector(Tile.SIZE, Tile.SIZE);
 
-        for(let a = 0; a < 360; a += 5){
+        for(let a = 0; a < 360; a += 1){
             let radianAngle = (a * Math.PI) / 180;
 
             this.rays.push(new Vector(Math.sin(radianAngle), Math.cos(radianAngle)));
