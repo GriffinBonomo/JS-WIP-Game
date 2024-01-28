@@ -55,12 +55,14 @@ export default class Light {
     }
 
     render(){
+        // Drawing light object
         context.fillStyle = 'yellow';
         context.fillRect(this.position.x - Tile.SIZE/2, this.position.y - Tile.SIZE/2, Tile.SIZE, Tile.SIZE);
-        context.fillStyle = 'white';
 
+        context.fillStyle = 'white';
         context.save();
-        context.globalAlpha = 0.4;
+        context.globalAlpha = 1;
+        context.globalCompositeOperation = 'overlay';
         context.beginPath();
         context.moveTo(this.collisionPoints[0].x, this.collisionPoints[0].y);
 

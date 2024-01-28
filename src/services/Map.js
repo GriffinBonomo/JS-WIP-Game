@@ -6,6 +6,7 @@ import ImageName from "../enums/ImageName.js";
 import Tile from "./Tile.js";
 import Layer from "./Layer.js";
 import {
+	canvas,
 	CANVAS_HEIGHT,
 	CANVAS_WIDTH,
 	context,
@@ -72,6 +73,16 @@ export default class Map {
 
 	render() {
 		this.bottomLayer.render();
+		this.decorationsLayer.render();
+
+		// DRAWING DARKNESS
+		context.save();
+		context.fillStyle = 'black';
+		context.globalCompositeOperation = "multiply";
+		context.globalAlpha = 0.5;
+		context.fillRect(0, 0, canvas.width, canvas.height);
+		context.restore();
+
 
 		// REMOVE THIS LATER
 		this.lights.forEach(light => {
@@ -79,7 +90,6 @@ export default class Map {
 		});
 		
 		this.collisionLayer.render();
-		this.decorationsLayer.render();
 
 		this.projectiles.forEach(projectile => {
 			projectile.render();
