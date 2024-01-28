@@ -69,6 +69,10 @@ export default class Map {
 
 	render() {
 		this.bottomLayer.render();
+
+		// REMOVE THIS LATER
+		this.light.render();
+		
 		this.collisionLayer.render();
 		this.decorationsLayer.render();
 
@@ -81,8 +85,7 @@ export default class Map {
 		this.crosshair.render();
 
 
-		// REMOVE THIS LATER
-		this.light.render();
+
 
 
 		if (DEBUG) {

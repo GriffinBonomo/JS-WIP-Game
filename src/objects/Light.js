@@ -18,7 +18,7 @@ export default class Light {
     calculateCollisionPoints(){
         const tileVector = new Vector(Tile.SIZE, Tile.SIZE);
 
-        for(let a = 0; a < 360; a += 3){
+        for(let a = 0; a < 360; a += 5){
             let radianAngle = (a * Math.PI) / 180;
 
             this.rays.push(new Vector(Math.sin(radianAngle), Math.cos(radianAngle)));
