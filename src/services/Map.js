@@ -43,9 +43,10 @@ export default class Map {
 		this.crosshair = new Crosshair();
 
 		this.lights = [];
-		this.lights.push(new Light(new Vector(250, 250), this));
-		this.lights.push(new Light(new Vector(510, 150), this));
-		this.lights.push(new Light(new Vector(440, 265), this));
+		this.lights.push(new Light(new Vector(272, 280), this));
+		this.lights.push(new Light(new Vector(412, 236), this));
+		this.lights.push(new Light(new Vector(148, 236), this));
+		this.lights.push(new Light(new Vector(584, 280), this));
 	}
 
 	update(dt) {
