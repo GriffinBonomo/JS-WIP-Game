@@ -9,28 +9,20 @@ export default class Light {
 
         this.rayLength = 300;
 
-        this.rays = [];
         this.collisionPoints = [];
 
         this.calculateCollisionPoints();
     }
 
     calculateCollisionPoints(){
-        this.rays = [];
         this.collisionPoints = [];
 
         const tileVector = new Vector(Tile.SIZE, Tile.SIZE);
 
         for(let a = 0; a < 360; a += 1){
-            let radianAngle = (a * Math.PI) / 180;
+            const radianAngle = (a * Math.PI) / 180;
 
-            this.rays.push(new Vector(Math.sin(radianAngle), Math.cos(radianAngle)));
-        }
-
-        this.rays.forEach(ray => {
-            const signVector = new Vector(Math.sign(ray.x), Math.sign(ray.y));
-            const f = x => (ray.y / ray.x) * (x - this.position.x) + this.position.y;
-            const g = y => (ray.x / ray.y) * (y - this.position.y) + this.position.x;
+            let ray = new Vector(Math.sin(radianAngle), Math.cos(radianAngle));
 
             let currentPos = new Vector(this.position.x, this.position.y);
 
@@ -50,7 +42,7 @@ export default class Light {
             if(!didCollide){
                 this.collisionPoints.push(new Vector(currentPos.x, currentPos.y));
             }
-        });
+        }
     }
 
     update(dt){
