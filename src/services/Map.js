@@ -44,9 +44,9 @@ export default class Map {
 
 		this.lights = [];
 		this.lights.push(new Light(new Vector(272, 280), this));
-		this.lights.push(new Light(new Vector(412, 236), this));
-		this.lights.push(new Light(new Vector(148, 236), this));
-		this.lights.push(new Light(new Vector(584, 280), this));
+		this.lights.push(new Light(new Vector(412, 236), this, { coneWidth: 90 }));
+		this.lights.push(new Light(new Vector(148, 236), this, { coneWidth: 90 }));
+		this.lights.push(new Light(new Vector(584, 280), this, { rayLength: 100, colour: '#E4D891'}));
 	}
 
 	update(dt) {
