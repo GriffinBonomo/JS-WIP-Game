@@ -43,10 +43,10 @@ export default class Map {
 		this.crosshair = new Crosshair();
 
 		this.lights = [];
-		this.lights.push(new Light(new Vector(272, 280), this));
-		this.lights.push(new Light(new Vector(412, 236), this, { coneWidth: 90 }));
-		this.lights.push(new Light(new Vector(148, 236), this, { coneWidth: 90 }));
-		this.lights.push(new Light(new Vector(584, 280), this, { rayLength: 100, colour: '#E4D891'}));
+		this.lights.push(new Light(new Vector(272, 260), this));
+		//this.lights.push(new Light(new Vector(412, 236), this, { coneWidth: 90 }));
+		//this.lights.push(new Light(new Vector(148, 236), this, { coneWidth: 90 }));
+		//this.lights.push(new Light(new Vector(584, 280), this, { rayLength:100, colour: '#E4D891'}));
 	}
 
 	update(dt) {
@@ -86,25 +86,20 @@ export default class Map {
 		context.fillRect(0, 0, canvas.width, canvas.height);
 		context.restore();
 
-
-		// REMOVE THIS LATER
-		this.lights.forEach(light => {
-			light.render();
-		});
-		
-		this.collisionLayer.render();
-
 		this.projectiles.forEach(projectile => {
 			projectile.render();
 		})
 		this.player.render();
+		
+		// REMOVE THIS LATER
+		this.lights.forEach(light => {
+			light.render();
+		});
+
+		this.collisionLayer.render();
 
         this.hud.render();
 		this.crosshair.render();
-
-
-
-
 
 		if (DEBUG) {
 			Map.renderGrid();

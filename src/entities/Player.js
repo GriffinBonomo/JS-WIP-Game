@@ -30,8 +30,6 @@ export default class Player extends Entity{
         {
             damageCooldownLength: 0.5,
             hitboxOffsets: new Hitbox(12, 3, -24, -4)
-            //hitboxOffsets: new Hitbox(0, 0, 5, 15)
-
         });
 
         this.map = map;
