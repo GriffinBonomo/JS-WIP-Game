@@ -1,4 +1,5 @@
 import { context } from "../../globals.js";
+import Ray from "../services/Ray.js";
 import Vector from "../../lib/Vector.js";
 import Tile from "../services/Tile.js";
 
@@ -27,44 +28,10 @@ export default class Light {
         for(let a = this.coneAngle - (this.coneWidth / 2); a < this.coneAngle + (this.coneWidth / 2); a += 1){
             const radianAngle = (a * Math.PI) / 180;
             let rayDir = new Vector(Math.sin(radianAngle), Math.cos(radianAngle));
-            const rayStepSize = new Vector(Math.sqrt(1 + Math.pow(rayDir.y / rayDir.x, 2)), Math.sqrt(1 + Math.pow(rayDir.x / rayDir.y, 2)));
-            let currentPosition = new Vector(this.position.x, this.position.y);
 
-            let currentRayLength = new Vector(); // Length from current position to nearest boundary
-            let step = new Vector(Math.sign(rayDir.x), Math.sign(rayDir.y));
-            if(rayDir.x < 0){
-                currentRayLength.x = (this.position.x - currentPosition.x) * rayStepSize.x;
-            }
-            else {
-                currentRayLength.x = (currentPosition.x + 1 - this.position.x) * rayStepSize.x;
-            }
-            if(rayDir.y < 0){
-                currentRayLength.y = (this.position.y - currentPosition.y) * rayStepSize.y;
-            }
-            else {
-                currentRayLength.y = (currentPosition.y + 1 - this.position.y) * rayStepSize.y;
-            }
+            const ray = new Ray(this.position, rayDir, this.rayLength, this.map.collisionLayer);
 
-            let currentDistance = 0;
-            let didCollide = false
-            while(!didCollide && currentDistance < this.rayLength){
-                if(currentRayLength.x < currentRayLength.y){
-                    currentPosition.x += step.x;
-                    currentDistance = currentRayLength.x;
-                    currentRayLength.x += rayStepSize.x;
-                }
-                else{
-                    currentPosition.y += step.y;
-                    currentDistance = currentRayLength.y;
-                    currentRayLength.y += rayStepSize.y;
-                }
-                if(this.map.collisionLayer.getTile(Math.trunc(currentPosition.x / Tile.SIZE), Math.trunc(currentPosition.y / Tile.SIZE))){
-                    didCollide = true;
-                    break;
-                }
-            }
-            this.collisionPoints.push(new Vector(currentPosition.x, currentPosition.y));
-         
+            this.collisionPoints.push(ray.Cast());
             /*
             const radianAngle = (a * Math.PI) / 180;
 
