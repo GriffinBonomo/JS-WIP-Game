@@ -27,6 +27,6 @@ export default class Projectile extends Entity{
 
     render(){
         context.fillStyle = this.colour;
-        context.fillRect(this.position.x, this.position.y, this.dimensions.x, this.dimensions.y);
+        context.fillRect(Math.trunc(this.position.x), Math.trunc(this.position.y), this.dimensions.x, this.dimensions.y);
     }
 }

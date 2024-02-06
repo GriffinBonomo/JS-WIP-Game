@@ -45,7 +45,7 @@ export default class Ray {
                 currentDistance = currentRayLength.y;
                 currentRayLength.y += rayStepSize.y;
             }
-            if(this.tileLayer.getTileAtPosition(currentPosition)){
+            if(this.tileLayer.getTileAtPosition(currentPosition.x, currentPosition.y)){
                 this.didCollide = true;
                 break;
             }

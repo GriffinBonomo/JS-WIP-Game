@@ -46,11 +46,12 @@ export default class Layer {
 	/**
 	 * Converts a position into the corresponding tile coordinate overlapping that point
 	 * and retrieves the tile at that point.
-	 * @param {*} position A 2D Vector
+	 * @param {*} x The x coordinate of the position.
+	 * @param {*} y The y coordinate of the position.
 	 * @returns The tile that overlaps the provided position.
 	 */
-	getTileAtPosition(position){
-		return this.getTile(Math.trunc(position.x / Tile.SIZE), Math.trunc(position.y / Tile.SIZE));
+	getTileAtPosition(x, y){
+		return this.getTile(Math.trunc(x / Tile.SIZE), Math.trunc(y / Tile.SIZE));
 	}
 
 	/**

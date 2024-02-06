@@ -1,7 +1,6 @@
 import { context } from "../../globals.js";
 import Ray from "../services/Ray.js";
 import Vector from "../../lib/Vector.js";
-import Tile from "../services/Tile.js";
 
 export default class Light {
     constructor(position, map, options = {}) {

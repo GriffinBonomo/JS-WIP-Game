@@ -90,26 +90,26 @@ export default class Entity {
     isTileColliding(){     
         // top
         for(let i = 0; i < this.hitbox.dimensions.x; i += Tile.SIZE){
-            if(this.map.collisionLayer.getTile(Math.trunc((this.hitbox.position.x + i) / Tile.SIZE), Math.trunc((this.hitbox.position.y) / Tile.SIZE)))
+            if(this.map.collisionLayer.getTileAtPosition(this.hitbox.position.x + i, this.hitbox.position.y))
                 return true;
         }
         // bottom
         for(let i = 0; i < this.hitbox.dimensions.x; i += Tile.SIZE){
-            if(this.map.collisionLayer.getTile(Math.trunc((this.hitbox.position.x + i) / Tile.SIZE), Math.trunc((this.hitbox.position.y + this.hitbox.dimensions.y) / Tile.SIZE)))
+            if(this.map.collisionLayer.getTileAtPosition(this.hitbox.position.x + i, this.hitbox.position.y + this.hitbox.dimensions.y))
                 return true; 
         }
         // bottom right
-        if(this.map.collisionLayer.getTile(Math.trunc((this.hitbox.position.x + this.hitbox.dimensions.x) / Tile.SIZE), Math.trunc((this.hitbox.position.y + this.hitbox.dimensions.y) / Tile.SIZE)))
+        if(this.map.collisionLayer.getTileAtPosition(this.hitbox.position.x + this.hitbox.dimensions.x, this.hitbox.position.y + this.hitbox.dimensions.y))
             return true;
 
         // left 
         for(let i = 0; i < this.hitbox.dimensions.y; i += Tile.SIZE){
-            if(this.map.collisionLayer.getTile(Math.trunc((this.hitbox.position.x) / Tile.SIZE), Math.trunc((this.hitbox.position.y + i) / Tile.SIZE)))
+            if(this.map.collisionLayer.getTileAtPosition(this.hitbox.position.x, this.hitbox.position.y + i))
                 return true; 
         }
         // right
         for(let i = 0; i < this.hitbox.dimensions.y; i += Tile.SIZE){
-            if(this.map.collisionLayer.getTile(Math.trunc((this.hitbox.position.x + this.hitbox.dimensions.x) / Tile.SIZE), Math.trunc((this.hitbox.position.y + i) / Tile.SIZE)))
+            if(this.map.collisionLayer.getTileAtPosition(this.hitbox.position.x + this.hitbox.dimensions.x, this.hitbox.position.y + i))
                 return true; 
         }
 
@@ -118,10 +118,10 @@ export default class Entity {
 
     isStandingOnGround(){
         for(let i = 0; i < this.hitbox.dimensions.x; i += Tile.SIZE){
-            if(this.map.collisionLayer.getTile(Math.trunc((this.hitbox.position.x + i) / Tile.SIZE), Math.trunc((this.hitbox.position.y + this.hitbox.dimensions.y + 1) / Tile.SIZE)))
+            if(this.map.collisionLayer.getTileAtPosition(this.hitbox.position.x + i, this.hitbox.position.y + this.hitbox.dimensions.y + 1))
                 return true;
         }
-        if(this.map.collisionLayer.getTile(Math.trunc((this.hitbox.position.x + this.hitbox.dimensions.x) / Tile.SIZE), Math.trunc((this.hitbox.position.y + this.hitbox.dimensions.y + 1) / Tile.SIZE)))
+        if(this.map.collisionLayer.getTileAtPosition(this.hitbox.position.x + this.hitbox.dimensions.x, this.hitbox.position.y + this.hitbox.dimensions.y + 1))
             return true;
         return false;
     }
