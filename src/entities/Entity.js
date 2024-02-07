@@ -3,12 +3,15 @@ import {
 } from "../../globals.js"
 import Hitbox from "../../lib/Hitbox.js";
 import Vector from "../../lib/Vector.js";
+import Direction from "../enums/Directions.js";
 import Tile from "../services/Tile.js";
 
 export default class Entity {
     constructor(position, dimensions, velocity, map, options = {}) {
         this.position = position;
         this.lastValidPosition = new Vector(position.x, position.y);
+
+        this.direction = Direction.Left;
 
         this.velocity = velocity;
         this.dimensions = dimensions;
@@ -65,7 +68,7 @@ export default class Entity {
     }
 
     render(){
-        if(this.velocity.x >= 0){
+        if(this.direction === Direction.Right){
             this.sprites[this.currentAnimation.getCurrentFrame()].render(Math.floor(this.position.x), Math.floor(this.position.y));
         }
         else{
@@ -75,7 +78,6 @@ export default class Entity {
 			this.sprites[this.currentAnimation.getCurrentFrame()].render(0, 0);
 			context.restore();
         }
-
         //this.hitbox.render(context);
     }
 

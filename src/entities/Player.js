@@ -12,7 +12,6 @@ import PlayerStateName from "../enums/PlayerStateNames.js";
 import PlayerIdleState from "../states/player/PlayerIdleState.js";
 import PlayerWalkingState from "../states/player/PlayerWalkingState.js";
 import ImageName from "../enums/ImageName.js";
-import HealthBar from "../ui/HealthBar.js";
 import RangedWeapon from "../items/RangedWeapon.js";
 import Hitbox from "../../lib/Hitbox.js";
 import PlayerFallingState from "../states/player/PlayerFallingState.js";
@@ -35,9 +34,6 @@ export default class Player extends Entity{
         this.map = map;
 
         // Stats 
-        this.ddx = 0;
-        this.ddy = 0;
-
         this.groundAcceleration = 40;
         this.maxSpeed = 80;
 
@@ -77,17 +73,13 @@ export default class Player extends Entity{
 
     move(direction){
         switch(direction){
-            case Direction.Up:
-                this.velocity.y = Math.max(-this.maxSpeed, (this.velocity.y-this.groundAcceleration) * this.movementModifier);
-                break;
-            case Direction.Down:
-                this.velocity.y = Math.min(this.maxSpeed, (this.velocity.y+this.groundAcceleration) * this.movementModifier);
-                break;
             case Direction.Left:
                 this.velocity.x = Math.max(-this.maxSpeed, (this.velocity.x-this.groundAcceleration) * this.movementModifier);
+                this.direction = direction;
                 break;
             case Direction.Right:
                 this.velocity.x = Math.min(this.maxSpeed, (this.velocity.x+this.groundAcceleration) * this.movementModifier);
+                this.direction = direction;
                 break;
         }
     }
@@ -118,8 +110,7 @@ export default class Player extends Entity{
     }
 
     render(){
-        this.weapon.render();
-
         super.render();
+        this.weapon.render();
     }
 }
