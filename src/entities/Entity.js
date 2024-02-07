@@ -76,7 +76,7 @@ export default class Entity {
 			context.restore();
         }
 
-        this.hitbox.render(context);
+        //this.hitbox.render(context);
     }
 
     takeDamage(amount){

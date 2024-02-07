@@ -23,6 +23,12 @@
             "path": "./assets/images/tileSprites.png",
             "width": 256,
             "height": 256
+        },
+        {
+            "name": "weapons",
+            "path": "./assets/images/weapons.png",
+            "width": 64,
+            "height": 64
         }
     ],
     "fonts": [

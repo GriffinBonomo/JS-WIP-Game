@@ -58,7 +58,6 @@ export default class Player extends Entity{
         this.stateMachine.change(PlayerStateName.Idle);
 
         // UI
-        this.healthBar = new HealthBar(this, HealthBar.PLAYER_BAR_DIMENSIONS);
     }
 
     generateSprites() {
@@ -113,14 +112,13 @@ export default class Player extends Entity{
         if(mouse.buttons[0]){
             this.weapon.shoot(mouse.position);
         }
-        this.healthBar.update(dt);
         this.weapon.update(dt);
 
         super.update(dt);
     }
 
     render(){
-        this.healthBar.render();
+        this.weapon.render();
 
         super.render();
     }
