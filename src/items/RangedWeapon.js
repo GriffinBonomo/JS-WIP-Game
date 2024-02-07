@@ -3,6 +3,10 @@ import Projectile from "../Entities/Projectile.js";
 import Sprite from "../../lib/Sprite.js";
 import ImageName from "../enums/ImageName.js";
 import { context, images, mouse } from "../../globals.js";
+import StateMachine from "../../lib/StateMachine.js";
+import WeaponHolsteredState from "../states/weapon/WeaponHolsteredState.js";
+import WeaponStateName from "../enums/WeaponStateName.js";
+import WeaponAimingState from "../states/weapon/WeaponAimingState.js";
 
 export default class RangedWeapon {
     static SPRITE_WIDTH = 16;
@@ -18,6 +22,11 @@ export default class RangedWeapon {
         this.shotDelayRemaining = 0;
 
         this.sprites = this.generateSprites();
+
+        this.stateMachine = new StateMachine();
+        this.stateMachine.add(WeaponStateName.Holstered, new WeaponHolsteredState(this, this.sprites[0]));
+        this.stateMachine.add(WeaponStateName.Aiming, new WeaponAimingState(this, this.sprites[0]));
+        this.stateMachine.change(WeaponStateName.Holstered);
     }
     
     generateSprites() {
@@ -52,6 +61,8 @@ export default class RangedWeapon {
 
     update(dt){
         this.shotDelayRemaining = Math.max(0, this.shotDelayRemaining - dt);
+
+        this.stateMachine.update(dt);
     }
 
     render(){
@@ -63,16 +74,6 @@ export default class RangedWeapon {
         context.stroke();
         context.restore();
 
-        context.save();
-        let dir = new Vector(mouse.position.x - this.owner.position.x, mouse.position.y - this.owner.position.y);
-        dir.normalize();
-        let angle = Math.atan2(dir.y, dir.x);
-        context.translate(this.owner.position.x, this.owner.position.y - 10);
-        context.rotate(angle);
-        if(Math.abs(angle * (180 / Math.PI)) > 90){
-			context.scale(1, -1);
-        }
-        this.sprites[0].render(0, -10);
-        context.restore();
+        this.stateMachine.render();
     }
 }
