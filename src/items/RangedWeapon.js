@@ -65,9 +65,13 @@ export default class RangedWeapon {
 
         context.save();
         let dir = new Vector(mouse.position.x - this.owner.position.x, mouse.position.y - this.owner.position.y);
-        let angle = Math.atan2(dir.x, -dir.y) - Math.PI/2;
-        context.translate(this.owner.position.x, this.owner.position.y);
+        dir.normalize();
+        let angle = Math.atan2(dir.y, dir.x);
+        context.translate(this.owner.position.x, this.owner.position.y - 10);
         context.rotate(angle);
+        if(Math.abs(angle * (180 / Math.PI)) > 90){
+			context.scale(1, -1);
+        }
         this.sprites[0].render(0, -10);
         context.restore();
     }
