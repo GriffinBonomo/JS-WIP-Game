@@ -9,7 +9,6 @@ export default class WeaponAimingState extends State {
         super();
 
         this.weapon = weapon;
-        this.position = new Vector(this.weapon.owner.hitbox.position.x, this.weapon.owner.hitbox.position.y);
         this.sprite = sprite;
     }
 
@@ -19,9 +18,6 @@ export default class WeaponAimingState extends State {
     }
     
     update(dt){
-        this.position.x = this.weapon.owner.hitbox.position.x;
-        this.position.y = this.weapon.owner.hitbox.position.y;
-
         if(keys.f){
             keys.f = false;
             this.weapon.stateMachine.change(WeaponStateName.Holstered);
@@ -30,10 +26,10 @@ export default class WeaponAimingState extends State {
 
     render(){
         context.save();
-        let dir = new Vector(mouse.position.x - this.position.x, mouse.position.y - this.position.y);
-        dir.normalize();
+        let dir = new Vector(mouse.position.x - this.weapon.position.x, mouse.position.y - this.weapon.position.y);
+
         let angle = Math.atan2(dir.y, dir.x);
-        context.translate(this.weapon.owner.position.x, this.weapon.owner.position.y - 10);
+        context.translate(this.weapon.position.x + this.weapon.owner.hitbox.dimensions.x/2, this.weapon.position.y + 5);
         context.rotate(angle);
         if(Math.abs(angle * (180 / Math.PI)) > 90){
 			context.scale(1, -1);
@@ -41,17 +37,4 @@ export default class WeaponAimingState extends State {
         this.sprite.render(0, 0);
         context.restore();
     }
-    /*
-            context.save();
-        let dir = new Vector(mouse.position.x - this.owner.position.x, mouse.position.y - this.owner.position.y);
-        dir.normalize();
-        let angle = Math.atan2(dir.y, dir.x);
-        context.translate(this.owner.position.x, this.owner.position.y - 10);
-        context.rotate(angle);
-        if(Math.abs(angle * (180 / Math.PI)) > 90){
-			context.scale(1, -1);
-        }
-        this.sprites[0].render(0, -10);
-        context.restore();
-        */
 }

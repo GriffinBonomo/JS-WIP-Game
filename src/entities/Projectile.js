@@ -6,7 +6,7 @@ import Tile from "../services/Tile.js";
 import Entity from "../entities/Entity.js"
 
 export default class Projectile extends Entity{
-    static DEFAULT_DIMENSIONS = new Vector(Tile.SIZE, Tile.SIZE);
+    static DEFAULT_DIMENSIONS = new Vector(4, 4);
 
     constructor(position, dimensions, velocity, weapon){
         super(position, dimensions, velocity, weapon.owner.map);

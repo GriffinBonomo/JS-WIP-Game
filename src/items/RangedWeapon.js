@@ -15,6 +15,8 @@ export default class RangedWeapon {
 
     constructor(owner, options = {}){
         this.owner = owner;
+        this.position = new Vector(0,0);
+        this.dimensions = new Vector(RangedWeapon.SPRITE_WIDTH, RangedWeapon.SPRITE_HEIGHT);
 
         this.shotDelay = 1 / (options.fireRate ?? 5);
         this.shotSpeed = options.shotSpeed ?? 500;
@@ -50,7 +52,7 @@ export default class RangedWeapon {
             direction.normalize();
             direction.scale(this.shotSpeed);
 
-            this.owner.map.projectiles.push(new Projectile(new Vector(this.owner.position.x, this.owner.position.y),
+            this.owner.map.projectiles.push(new Projectile(new Vector(this.position.x, this.position.y),
             Projectile.DEFAULT_DIMENSIONS,
             direction,
             this));
@@ -61,6 +63,8 @@ export default class RangedWeapon {
 
     update(dt){
         this.shotDelayRemaining = Math.max(0, this.shotDelayRemaining - dt);
+        this.position.x = this.owner.hitbox.position.x;
+        this.position.y = this.owner.hitbox.position.y;
 
         this.stateMachine.update(dt);
     }
