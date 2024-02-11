@@ -1,5 +1,5 @@
 import { context } from "../../globals.js";
-import Ray from "../services/Ray.js";
+import Ray from "../../lib/Ray.js";
 import Vector from "../../lib/Vector.js";
 
 export default class Light {
@@ -28,33 +28,9 @@ export default class Light {
             const radianAngle = (a * Math.PI) / 180;
             let rayDir = new Vector(Math.sin(radianAngle), Math.cos(radianAngle));
 
-            const ray = new Ray(this.position, rayDir, this.rayLength, this.map.collisionLayer);
+            const ray = new Ray(this.position, rayDir, this.rayLength);
 
-            this.collisionPoints.push(ray.Cast());
-            /*
-            const radianAngle = (a * Math.PI) / 180;
-
-            const ray = new Vector(Math.sin(radianAngle), Math.cos(radianAngle));
-
-            let currentPos = new Vector(this.position.x, this.position.y);
-
-            let didCollide = false;
-
-            for(let i = 0; i <= this.rayLength; i += Tile.SIZE){
-                // calculate step
-                currentPos.add(ray.multiply(tileVector));
-
-                // naive approach
-                if(this.map.collisionLayer.getTile(Math.trunc(currentPos.x / Tile.SIZE), Math.trunc(currentPos.y / Tile.SIZE))){
-                    this.collisionPoints.push(new Vector(currentPos.x, currentPos.y));
-                    didCollide = true;
-                    break;
-                }
-            }
-            if(!didCollide){
-                this.collisionPoints.push(new Vector(currentPos.x, currentPos.y));
-            }
-            */
+            this.collisionPoints.push(this.map.rayCast(ray));
         }
     }
 
@@ -79,8 +55,7 @@ export default class Light {
         context.globalAlpha = this.opacity;
         context.globalCompositeOperation = this.compositeStyle;
         context.beginPath();
-        context.moveTo(this.position.x, this.position.y);
-
+        context.moveTo(this.position.x, this.position.y); 
         this.collisionPoints.forEach(point => {
             context.lineTo(point.x, point.y);
         });

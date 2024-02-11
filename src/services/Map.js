@@ -44,9 +44,49 @@ export default class Map {
 
 		this.lights = [];
 		this.lights.push(new Light(new Vector(272, 260), this));
-		//this.lights.push(new Light(new Vector(412, 236), this, { coneWidth: 90 }));
-		//this.lights.push(new Light(new Vector(148, 236), this, { coneWidth: 90 }));
-		//this.lights.push(new Light(new Vector(584, 280), this, { rayLength:100, colour: '#E4D891'}));
+		this.lights.push(new Light(new Vector(412, 236), this, { coneWidth: 90 }));
+		this.lights.push(new Light(new Vector(148, 236), this, { coneWidth: 90 }));
+		this.lights.push(new Light(new Vector(584, 280), this, { rayLength:100, colour: '#E4D891'}));
+	}
+
+	rayCast(ray){
+		const rayStepSize = new Vector(Math.sqrt(1 + Math.pow(ray.direction.y / ray.direction.x, 2)), Math.sqrt(1 + Math.pow(ray.direction.x / ray.direction.y, 2)));
+        let currentPosition = new Vector(ray.position.x, ray.position.y);
+
+        let currentRayLength = new Vector(); // Length from current position to nearest boundary
+        let step = new Vector(Math.sign(ray.direction.x), Math.sign(ray.direction.y));
+        if(ray.direction.x < 0){
+            currentRayLength.x = (ray.position.x - currentPosition.x) * rayStepSize.x;
+        }
+        else {
+            currentRayLength.x = (currentPosition.x + 1 - ray.position.x) * rayStepSize.x;
+        }
+        if(ray.direction.y < 0){
+            currentRayLength.y = (ray.position.y - currentPosition.y) * rayStepSize.y;
+        }
+        else {
+            currentRayLength.y = (currentPosition.y + 1 - ray.position.y) * rayStepSize.y;
+        }
+
+        let currentDistance = 0;
+		let didCollide = false;
+        while(!didCollide && currentDistance < ray.length){
+            if(currentRayLength.x < currentRayLength.y){
+                currentPosition.x += step.x;
+                currentDistance = currentRayLength.x;
+                currentRayLength.x += rayStepSize.x;
+            }
+            else{
+                currentPosition.y += step.y;
+                currentDistance = currentRayLength.y;
+                currentRayLength.y += rayStepSize.y;
+            }
+            if(this.collisionLayer.getTileAtPosition(currentPosition.x, currentPosition.y)){
+                didCollide = true;
+                break;
+            }
+        }
+        return new Vector(currentPosition.x, currentPosition.y);
 	}
 
 	update(dt) {
