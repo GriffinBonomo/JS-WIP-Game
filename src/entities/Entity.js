@@ -7,17 +7,17 @@ import Direction from "../enums/Directions.js";
 import Tile from "../services/Tile.js";
 
 export default class Entity {
-    constructor(position, dimensions, velocity, map, options = {}) {
+    constructor(position, dimensions, map, options = {}) {
         this.position = position;
         this.lastValidPosition = new Vector(position.x, position.y);
 
         this.direction = Direction.Left;
 
-        this.velocity = velocity;
         this.dimensions = dimensions;
 
         this.movementModifier = 1;
         
+        this.velocity = options.velocity ?? new Vector(0,0);
         this.hitboxOffsets = options.hitboxOffsets ?? new Hitbox();
         this.hitbox = new Hitbox(
             this.position.x + this.hitboxOffsets.position.x,

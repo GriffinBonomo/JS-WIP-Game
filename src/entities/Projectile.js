@@ -9,7 +9,7 @@ export default class Projectile extends Entity{
     static DEFAULT_DIMENSIONS = new Vector(4, 4);
 
     constructor(position, dimensions, velocity, weapon){
-        super(position, dimensions, velocity, weapon.owner.map);
+        super(position, dimensions, weapon.owner.map, {velocity: new Vector(velocity.x, velocity.y)});
 
         this.weapon = weapon;
 

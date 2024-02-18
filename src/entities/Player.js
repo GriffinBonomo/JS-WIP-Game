@@ -25,7 +25,7 @@ export default class Player extends Entity{
     static GRAVITY = 300;
 
     constructor(position, dimensions, map){
-        super(position, dimensions, new Vector(0,0), map, 
+        super(position, dimensions, map, 
         {
             damageCooldownLength: 0.5,
             hitboxOffsets: new Hitbox(12, 3, -24, -4)
@@ -52,8 +52,6 @@ export default class Player extends Entity{
         this.stateMachine.add(PlayerStateName.Falling, new PlayerFallingState(this));
         this.stateMachine.add(PlayerStateName.Jumping, new PlayerJumpingState(this));
         this.stateMachine.change(PlayerStateName.Idle);
-
-        // UI
     }
 
     generateSprites() {
