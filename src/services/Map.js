@@ -27,14 +27,21 @@ export default class Map {
 	 * @param {object} mapDefinition JSON from Tiled map editor.
 	 */
 	constructor(mapDefinition) {
-		const sprites = Sprite.generateSpritesFromSpriteSheet(
+		const tileSprites = Sprite.generateSpritesFromSpriteSheet(
 			images.get(ImageName.Tiles),
 			Tile.SIZE,
 			Tile.SIZE,
 		);
-		this.bottomLayer = new Layer(mapDefinition.layers[Layer.BOTTOM], sprites);
-		this.decorationsLayer = new Layer(mapDefinition.layers[Layer.DECORATIONS], sprites);
-		this.collisionLayer = new Layer(mapDefinition.layers[Layer.COLLISION], sprites);
+
+		const enemySprites = Sprite.generateSpritesFromSpriteSheet(
+			images.get(ImageName.Enemy),
+			Tile.SIZE * 2,
+			Tile.SIZE * 2,
+		);
+
+		this.bottomLayer = new Layer(mapDefinition.layers[Layer.BOTTOM], tileSprites);
+		this.decorationsLayer = new Layer(mapDefinition.layers[Layer.DECORATIONS], tileSprites);
+		this.collisionLayer = new Layer(mapDefinition.layers[Layer.COLLISION], tileSprites);
 		this.player = new Player(new Vector(200,80), new Vector(Player.SPRITE_WIDTH, Player.SPRITE_HEIGHT), this);
 		this.projectiles = [];
 
