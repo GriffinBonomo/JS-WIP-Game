@@ -22,6 +22,15 @@ export default class WeaponAimingState extends State {
             keys.f = false;
             this.weapon.stateMachine.change(WeaponStateName.Holstered);
         }
+        if(mouse.buttons[0]){
+            this.weapon.shoot(mouse.position);
+        }
+
+        if((this.weapon.owner.hitbox.position.x + this.weapon.owner.hitbox.dimensions.x / 2) - mouse.position.x < 0){
+            this.weapon.owner.direction = Direction.Right;
+        }
+        else
+            this.weapon.owner.direction = Direction.Left;
     }
 
     render(){

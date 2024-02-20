@@ -1,5 +1,5 @@
 import Vector from "../../lib/Vector.js";
-import Projectile from "../Entities/Projectile.js";
+import Projectile from "../entities/Projectile.js";
 import Sprite from "../../lib/Sprite.js";
 import ImageName from "../enums/ImageName.js";
 import { context, images, mouse } from "../../globals.js";

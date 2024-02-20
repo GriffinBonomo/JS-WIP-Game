@@ -14,6 +14,8 @@ export default class Light {
         this.coneAngle = options.coneAngle ?? 0;
         this.coneWidth = options.coneWidth ?? 360;
 
+        this.isOn = true;
+
         this.collisionPoints = [];
         this.calculateCollisionPoints();
     }
@@ -39,29 +41,24 @@ export default class Light {
     }
 
     render(){
-        // Drawing light object
         context.fillStyle = 'red';
         context.fillRect(this.position.x -1, this.position.y -1, 3, 3);
 
-        context.fillStyle = this.colour;
-        /*
-        const gradient = context.createRadialGradient(this.position.x, this.position.y, 50, this.position.x, this.position.y, this.rayLength);
-        gradient.addColorStop(0, this.colour);
-        gradient.addColorStop(1, "rgba(255,255,255,0)");
-        
-        context.fillStyle = gradient
-        */
-        context.save();
-        context.globalAlpha = this.opacity;
-        context.globalCompositeOperation = this.compositeStyle;
-        context.beginPath();
-        context.moveTo(this.position.x, this.position.y); 
-        this.collisionPoints.forEach(point => {
-            context.lineTo(point.x, point.y);
-        });
+        if(this.isOn){
+            context.save();
+            context.fillStyle = this.colour;
+            context.globalAlpha = this.opacity;
+            context.globalCompositeOperation = this.compositeStyle;
+            context.beginPath();
+            
+            context.moveTo(this.position.x, this.position.y); 
+            this.collisionPoints.forEach(point => {
+                context.lineTo(point.x, point.y);
+            });
 
-        context.closePath();
-        context.fill();
-        context.restore();
+            context.closePath();
+            context.fill();
+            context.restore();
+        }
     }
 }

@@ -98,10 +98,6 @@ export default class Player extends Entity{
     }
 
     update(dt){
-        // Attacking
-        if(mouse.buttons[0]){
-            this.weapon.shoot(mouse.position);
-        }
         this.weapon.update(dt);
 
         super.update(dt);
