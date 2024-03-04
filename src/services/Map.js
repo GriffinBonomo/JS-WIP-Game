@@ -18,6 +18,8 @@ import HUD from "../ui/hud.js";
 import GameStateName from "../enums/GameStateName.js";
 import Crosshair from "../ui/Crosshair.js";
 import Light from "../objects/Light.js";
+import EnemyFactory from "../entities/enemies/EnemyFactory.js";
+import EnemyType from "../enums/EnemyTypes.js";
 
 export default class Map {
 	/**
@@ -42,8 +44,13 @@ export default class Map {
 		this.bottomLayer = new Layer(mapDefinition.layers[Layer.BOTTOM], tileSprites);
 		this.decorationsLayer = new Layer(mapDefinition.layers[Layer.DECORATIONS], tileSprites);
 		this.collisionLayer = new Layer(mapDefinition.layers[Layer.COLLISION], tileSprites);
+		this.toppersLayer = new Layer(mapDefinition.layers[Layer.TOPPERS], tileSprites);
+
 		this.player = new Player(new Vector(200,80), new Vector(Player.SPRITE_WIDTH, Player.SPRITE_HEIGHT), this);
-		this.projectiles = [];
+
+		this.entities = [];
+
+		//this.entities.push(EnemyFactory.create(EnemyType.Zombie, enemySprites));
 
 		// Move this out of the map
         this.hud = new HUD(this.player, 1);
@@ -99,10 +106,10 @@ export default class Map {
 	update(dt) {
 		this.player.update(dt);
 
-		this.projectiles.forEach((projectile, index) => {
-			projectile.update(dt);
-			if(projectile.isDead){
-				this.projectiles.splice(index, 1);
+		this.entities.forEach((entity, index) => {
+			entity.update(dt);
+			if(entity.isDead){
+				this.entities.splice(index, 1);
 			}
 		}) 
 
@@ -133,8 +140,8 @@ export default class Map {
 		context.fillRect(0, 0, canvas.width, canvas.height);
 		context.restore();
 
-		this.projectiles.forEach(projectile => {
-			projectile.render();
+		this.entities.forEach(entity => {
+			entity.render();
 		})
 		this.player.render();
 		
@@ -144,6 +151,7 @@ export default class Map {
 		});
 
 		this.collisionLayer.render();
+		this.toppersLayer.render();
 
         this.hud.render();
 		this.crosshair.render();

@@ -1,3 +1,5 @@
-export const EnemyType = {
+const EnemyType = {
     Zombie: "Zombie",
 }
+
+export default EnemyType;

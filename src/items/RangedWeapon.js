@@ -52,7 +52,7 @@ export default class RangedWeapon {
             direction.normalize();
             direction.scale(this.shotSpeed);
 
-            this.owner.map.projectiles.push(new Projectile(new Vector(this.position.x, this.position.y),
+            this.owner.map.entities.push(new Projectile(new Vector(this.position.x, this.position.y + this.dimensions.y / 2),
             Projectile.DEFAULT_DIMENSIONS,
             direction,
             this));
@@ -72,7 +72,7 @@ export default class RangedWeapon {
     render(){
         context.save();
         context.beginPath();
-        context.moveTo(this.owner.position.x, this.owner.position.y);
+        context.moveTo(this.position.x, this.position.y);
         context.lineTo(mouse.position.x, mouse.position.y);
         context.closePath();
         context.stroke();
