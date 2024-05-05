@@ -70,14 +70,6 @@ export default class RangedWeapon {
     }
 
     render(){
-        context.save();
-        context.beginPath();
-        context.moveTo(this.position.x, this.position.y);
-        context.lineTo(mouse.position.x, mouse.position.y);
-        context.closePath();
-        context.stroke();
-        context.restore();
-
         this.stateMachine.render();
     }
 }
